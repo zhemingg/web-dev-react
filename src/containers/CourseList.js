@@ -1,10 +1,33 @@
 import React from 'react';
-import CourseRow from '../components/CourseRow'
+import CourseRow from '../components/CourseRow';
+import CourseService from '../services/CourseService';
 class CourseList extends React.Component {
     constructor() {
         super();
-        
+        this.courseService = CourseService.instance;
+        this.state = {courses: []};
+
     }
+
+    componentDidMount() {
+        this.courseService.findAllCourses()
+            .then((courses) => {
+                this.setState({courses: courses});
+            });
+    }
+
+    renderCourseRows(){
+        let courses = null;
+        if(this.state){
+            courses = this.state.courses.map(
+                function (course) {
+                    return <CourseRow key={course.id} course={course}/>
+                });
+        }
+        return courses;
+
+    }
+
     render() {
         return (
             <div>
@@ -16,10 +39,7 @@ class CourseList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                       <CourseRow/>
-                       <CourseRow/>
-                       <CourseRow/>
-                       <CourseRow/>
+                        {this.renderCourseRows()}
                     </tbody>
                 </table>
             </div>
