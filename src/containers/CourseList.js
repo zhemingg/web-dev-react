@@ -3,6 +3,7 @@ import CourseRow from '../components/CourseRow'
 class CourseList extends React.Component {
     constructor() {
         super();
+        
     }
     render() {
         return (
