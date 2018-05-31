@@ -6,6 +6,8 @@ class CourseList extends React.Component {
         super();
         this.courseService = CourseService.instance;
         this.state = {courses: []};
+        this.titleChanged = this.titleChanged.bind(this);
+        this.createCourse = this.createCourse.bind(this);
 
     }
 
@@ -27,6 +29,15 @@ class CourseList extends React.Component {
         return courses;
 
     }
+    titleChanged(event) {
+        this.setState({
+            course: { title: event.target.value }
+        });
+    }
+
+    createCourse()      {
+        console.log("createCourse");
+    }
 
     render() {
         return (
@@ -37,6 +48,12 @@ class CourseList extends React.Component {
                         <tr>
                             <th>Title</th>
                         </tr>
+                        <tr>
+                            <th><input id="titleFld" className="form-control"
+                                       onChange={this.titleChanged} placeholder="cs101"/></th>
+                            <th><button className="btn btn-primary" onClick={this.createCourse}>Add</button></th>
+                        </tr>
+
                     </thead>
                     <tbody>
                         {this.renderCourseRows()}
