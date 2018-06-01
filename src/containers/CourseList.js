@@ -54,7 +54,7 @@ class CourseList extends React.Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Title</th><th>&nbsp;</th>
                         </tr>
                         <tr>
                             <th><input id="titleFld" className="form-control"
