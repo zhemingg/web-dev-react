@@ -1,7 +1,7 @@
 import React from 'react'
 import ModuleListItem from '../components/ModuleListItem'
 
-class ModuleList2 extends React.Component {
+class ModuleList extends React.Component {
 
     constructor() { super();
         this.state = {
@@ -32,7 +32,7 @@ class ModuleList2 extends React.Component {
     renderListOfModules() {
         let modules = this.state.modules.map(function (module) {
             return <ModuleListItem key={module.id} title={module.title}/>
-        })
+        });
         return modules;
     }
 
@@ -43,11 +43,11 @@ class ModuleList2 extends React.Component {
                 <input className="form-control"
                        onChange={this.titleChanged}
                        placeholder="title"/>
-
                 <button onClick={this.createModule} className="btn btn-primary btn-block">
                     <i className="fa fa-plus"></i>
+                    {/*PLUS*/}
                 </button>
-
+                <br/>
                 <ul className="list-group">
                     {this.renderListOfModules()}
                 </ul>
@@ -56,4 +56,4 @@ class ModuleList2 extends React.Component {
     }
 }
 
-export default ModuleList2;
+export default ModuleList;
