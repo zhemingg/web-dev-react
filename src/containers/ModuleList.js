@@ -55,6 +55,22 @@ class ModuleList extends React.Component {
         this.setState({courseId: courseId});
     }
 
+    setModules(modules) {
+        this.setState({modules: modules})
+    }
+    findAllModulesForCourse(courseId) {
+        this.ModuleService
+            .findAllModulesForCourse(courseId)
+            .then((modules) => {this.setModules(modules)});
+    }
+
+    componentWillReceiveProps(newProps){
+        this.setCourseId(newProps.courseId);
+        this.findAllModulesForCourse(newProps.courseId);
+    }
+
+
+
 
     render() {
         return(
