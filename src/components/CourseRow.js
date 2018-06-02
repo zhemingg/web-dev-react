@@ -14,7 +14,11 @@ class CourseRow extends React.Component {
                     </Link>
 
                 </td>
-                <td></td>
+                <td>me</td>
+                <td>time</td>
+                <td>
+                    <i className="fa fa-remove"></i>
+                </td>
             </tr>
         )
     }

@@ -1,22 +1,24 @@
 import React from 'react';
 import CourseList from './CourseList';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 import CourseEditor from './CourseEditor';
+
+require('../styles/CourseManager.Style.css');
 
 
 class CourseManager extends React.Component {
     render() {
         return (
-            <Router>
-                <div className="container-fluid">
-                    <h1>Course Manager</h1>
-                    <Route path='/courses' component={CourseList}></Route>
-                    <Route path="/course/:courseId/edit"
-                           component={CourseEditor}>
-                    </Route>
-                </div>
-            </Router>
-        )
+
+            <div>
+                <nav className="navbar navbar-expand navbar-dark bg-primary sticky-top">
+                    <h1 className="navbar-brand">Course Manager</h1>
+                    <input id="inputFld" className="form-control" placeholder="New Course Title"></input>
+                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" type="submit">+</button>
+                </nav>
+                <CourseList/>
+            </div>
+
+        );
     }
 }
 
