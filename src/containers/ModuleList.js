@@ -75,6 +75,13 @@ class ModuleList extends React.Component {
     render() {
         return(
             <div>
+                <nav className="navbar navbar-expand navbar-dark bg-primary sticky-top">
+                    <h1 className="navbar-brand">Course Manager</h1>
+                    <input id="titleFld" className="form-control" onChange={this.titleChanged}
+                           placeholder="New Course Title"></input>
+                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>+
+                    </button>
+                </nav>
                 <h3>Module List for course: {this.state.courseId}</h3>
                 <input className="form-control"
                        onChange={this.titleChanged}

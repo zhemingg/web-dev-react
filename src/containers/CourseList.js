@@ -1,11 +1,10 @@
 import React from 'react';
 import CourseRow from '../components/CourseRow';
 import CourseService from '../services/CourseService';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 class CourseList extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.courseService = CourseService.instance;
         this.state = {courses: []};
         this.titleChanged = this.titleChanged.bind(this);
@@ -57,31 +56,22 @@ class CourseList extends React.Component {
     deleteCourse(courseId) {
         this.courseService
             .deleteCourse(courseId)
-            .then(() => {this.findAllCourses();});
+            .then(() => {
+                this.findAllCourses();
+            });
     }
 
 
-
-        render() {
+    render() {
         return (
-
-            // {/*<Router>*/}
-            // {/*<div className="container-fluid">*/}
-            // {/*<h1>Course Manager</h1>*/}
-            // {/*<Route path='/courses' component={CourseList}></Route>*/}
-            // {/*<Route path="/course/:courseId/edit"*/}
-            // {/*component={CourseEditor}>*/}
-            // {/*</Route>*/}
-            // {/*</div>*/}
-            // {/*</Router>*/}
-            <Router>
-                <div>
+            <div>
                 <nav className="navbar navbar-expand navbar-dark bg-primary sticky-top">
                     <h1 className="navbar-brand">Course Manager</h1>
-                    <input id="titleFld" className="form-control" onChange={this.titleChanged} placeholder="New Course Title"></input>
-                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0"  onClick={this.createCourse}>+</button>
+                    <input id="titleFld" className="form-control" onChange={this.titleChanged}
+                           placeholder="New Course Title"></input>
+                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>+
+                    </button>
                 </nav>
-
                 <div className="container-fluid">
                     <table className="table">
                         <thead>
@@ -91,17 +81,13 @@ class CourseList extends React.Component {
                             <th>Last Modified By Me</th>
                             <th>&nbsp;</th>
                         </tr>
-
-                        {console.log('hello')}
                         </thead>
                         <tbody>
                         {this.renderCourseRows()}
                         </tbody>
                     </table>
                 </div>
-                </div>
-            </Router>
-
+            </div>
         )
     }
 }
