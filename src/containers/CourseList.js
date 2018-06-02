@@ -10,6 +10,7 @@ class CourseList extends React.Component {
         this.state = {courses: []};
         this.titleChanged = this.titleChanged.bind(this);
         this.createCourse = this.createCourse.bind(this);
+        this.deleteCourse = this.deleteCourse.bind(this);
 
     }
 
@@ -29,10 +30,11 @@ class CourseList extends React.Component {
     renderCourseRows() {
         let courses = null;
         if (this.state) {
-            courses = this.state.courses.map(
-                function (course) {
-                    return <CourseRow key={course.id} course={course}/>
-                });
+            courses = this.state.courses.map((course) => {
+                return <CourseRow course={course} key={course.id}
+                                  delete={this.deleteCourse}/>
+
+            });
         }
         return courses;
 
@@ -52,7 +54,15 @@ class CourseList extends React.Component {
             });
     }
 
-    render() {
+    deleteCourse(courseId) {
+        this.courseService
+            .deleteCourse(courseId)
+            .then(() => {this.findAllCourses();});
+    }
+
+
+
+        render() {
         return (
 
             // {/*<Router>*/}
@@ -65,6 +75,13 @@ class CourseList extends React.Component {
             // {/*</div>*/}
             // {/*</Router>*/}
             <Router>
+                <div>
+                <nav className="navbar navbar-expand navbar-dark bg-primary sticky-top">
+                    <h1 className="navbar-brand">Course Manager</h1>
+                    <input id="titleFld" className="form-control" onChange={this.titleChanged} placeholder="New Course Title"></input>
+                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0"  onClick={this.createCourse}>+</button>
+                </nav>
+
                 <div className="container-fluid">
                     <table className="table">
                         <thead>
@@ -72,11 +89,6 @@ class CourseList extends React.Component {
                             <th>Title</th>
                             <th>Owned By</th>
                             <th>Last Modified By Me</th>
-                            {/*<th><input id="titleFld" className="form-control"*/}
-                            {/*onChange={this.titleChanged} placeholder="cs101"/></th>*/}
-                            {/*<th>*/}
-                            {/*<button className="btn btn-primary" onClick={this.createCourse}>Add</button>*/}
-                            {/*</th>*/}
                             <th>&nbsp;</th>
                         </tr>
 
@@ -86,6 +98,7 @@ class CourseList extends React.Component {
                         {this.renderCourseRows()}
                         </tbody>
                     </table>
+                </div>
                 </div>
             </Router>
 
