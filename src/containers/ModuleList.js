@@ -10,8 +10,8 @@ class ModuleList extends React.Component {
         this.state = {
             courseId: '',
             course: '',
-            module: {title: 'New Module'},
-            modules: []
+            module: {title: 'New Module', selectedId : ''},
+            modules: [],
         };
 
         this.titleChanged = this.titleChanged.bind(this);
@@ -19,8 +19,9 @@ class ModuleList extends React.Component {
         this.setCourseId = this.setCourseId.bind(this);
         this.ModuleService = ModuleService.instance;
         this.CourseService = CourseService.instance;
-
+        this.selectModule = this.selectModule.bind(this);
         this.setCourse = this.setCourse.bind(this);
+        this.deleteModule = this.deleteModule.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -40,14 +41,25 @@ class ModuleList extends React.Component {
 
     }
 
+    deleteModule(moduleId) {
+        this.ModuleService
+            .deleteModule(moduleId)
+            .then(() => {
+                this.findAllModulesForCourse
+                (this.state.courseId)
+            });
+
+
+    }
+
     titleChanged(event) {
         console.log(event.target.value);
         this.setState({module: {title: event.target.value}});
     }
 
     renderListOfModules() {
-        let modules = this.state.modules.map(function (module) {
-            return <ModuleListItem key={module.id} title={module.title}/>
+        let modules = this.state.modules.map((module) => {
+            return <ModuleListItem key={module.id} title={module.title} selected={module.selected} moduleId = {module.id} delete={this.deleteModule}/>
         });
         return modules;
     }
@@ -66,13 +78,15 @@ class ModuleList extends React.Component {
                 })
             }
         )
-        // this.setState({course: });
     }
 
     setModules(modules) {
         this.setState({modules: modules})
     }
 
+    selectModule(){
+
+    }
     findAllModulesForCourse(courseId) {
         this.ModuleService
             .findAllModulesForCourse(courseId)
