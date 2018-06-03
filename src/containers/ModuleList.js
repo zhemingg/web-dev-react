@@ -12,6 +12,7 @@ class ModuleList extends React.Component {
             course: '',
             module: {title: 'New Module', selectedId : ''},
             modules: [],
+            selectedModule:''
         };
 
         this.titleChanged = this.titleChanged.bind(this);
@@ -59,7 +60,13 @@ class ModuleList extends React.Component {
 
     renderListOfModules() {
         let modules = this.state.modules.map((module) => {
-            return <ModuleListItem key={module.id} title={module.title} selected={module.selected} moduleId = {module.id} delete={this.deleteModule}/>
+            return <ModuleListItem key={module.id}
+                                   title={module.title}
+                                   selecteModule={this.selectModule}
+                                   moduleId = {module.id}
+                                   courseId = {this.state.courseId}
+                                   delete={this.deleteModule}
+                                   selectedModuleId={this.state.selectedModule}/>
         });
         return modules;
     }
@@ -84,9 +91,11 @@ class ModuleList extends React.Component {
         this.setState({modules: modules})
     }
 
-    selectModule(){
-
+    selectModule(moduleId){
+        console.log(moduleId);
+        this.setState({selectedModule: moduleId})
     }
+
     findAllModulesForCourse(courseId) {
         this.ModuleService
             .findAllModulesForCourse(courseId)
