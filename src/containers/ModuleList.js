@@ -10,15 +10,8 @@ class ModuleList extends React.Component {
         this.state = {
             courseId: '',
             course: '',
-            module: {title: ''},
-            modules: [
-                {title: 'Module 1 - jQuery', id: 123},
-                {title: 'Module 2 - React', id: 234},
-                {title: 'Module 3 - Redux', id: 345},
-                {title: 'Module 4 - Angular', id: 456},
-                {title: 'Module 5 - Node.js', id: 567},
-                {title: 'Module 6 - MongoDB', id: 678}
-            ]
+            module: {title: 'New Module'},
+            modules: []
         };
 
         this.titleChanged = this.titleChanged.bind(this);
@@ -34,17 +27,21 @@ class ModuleList extends React.Component {
         // console.log('...');
         this.setCourseId(newProps.courseId);
         this.setCourse(newProps.courseId);
+        this.findAllModulesForCourse(newProps.courseId)
     }
 
     createModule(event) {
-        //console.log(this.state.module);
+        console.log(this.state.module);
         this.ModuleService
-            .createModule(this.props.courseId, this.state.module);
+            .createModule(this.props.courseId, this.state.module)
+            .then(
+                () => {this.findAllModulesForCourse(this.state.courseId)}
+            )
 
     }
 
     titleChanged(event) {
-        //console.log(event.target.value);
+        console.log(event.target.value);
         this.setState({module: {title: event.target.value}});
     }
 
@@ -63,7 +60,7 @@ class ModuleList extends React.Component {
         this.CourseService
             .findCourseById(courseId).then(
             (course) => {
-                console.log(course);
+                //console.log(course);
                 this.setState({
                     course: course
                 })
