@@ -69,7 +69,8 @@ class CourseList extends React.Component {
                     <h1 className="navbar-brand">Course Manager</h1>
                     <input id="titleFld" className="form-control" onChange={this.titleChanged}
                            placeholder="New Course Title"></input>
-                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>+
+                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>
+                        <i className="fa fa-plus"></i>
                     </button>
                 </nav>
                 <div className="container-fluid">

@@ -8,7 +8,6 @@ require('../styles/CourseManager.Style.css');
 
 class CourseManager extends React.Component {
     render() {
-        console.log("hello");
         return (
             <Router>
                 <div>

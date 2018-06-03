@@ -5,14 +5,15 @@ export default class ModuleListItem
     constructor(props) {
         super(props);
     }
+
     render() {
         return (
-            <li className="list-group-item">
+            <li className="list-group-item" style={{margin:"5px 10px"}}>
                 {this.props.title}
                 <span className="float-right">
-          <i className="fa fa-trash"></i>
-          <i className="fa fa-pencil"></i>
-        </span>
+                    <i className="fa fa-trash"></i>
+                    <i className="fa fa-pencil"></i>
+                 </span>
             </li>
         );
     }
