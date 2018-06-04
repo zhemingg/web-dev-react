@@ -36,7 +36,6 @@ class ModuleEditor extends React.Component {
         return (
             <div className="container">
                 <div>
-                    {console.log(this.state)}
                     <LessonTabs moduleId={this.state.moduleId} courseId={this.state.courseId}/>
                 </div>
                 <div className="row">

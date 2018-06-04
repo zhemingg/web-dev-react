@@ -1,8 +1,8 @@
 import React from 'react';
-import LessonTab from './LessonTabs'
-// import LessonTabs from './LessonTabs'
-// import { Route} from 'react-router-dom'
-//
+import TopicList from "./TopicList";
+import TopicEditor from  './TopicEditor';
+import {Route} from 'react-router-dom';
+
 class LessonEditor extends React.Component {
     constructor(props) {
         super(props);
@@ -42,20 +42,15 @@ class LessonEditor extends React.Component {
 //
     render() {
         return (
-            <h3>Lesson Editor</h3>
-//             <div className="bg-secondary">
-//                 <div className="row">
-//                     <div className="col-4">
-//                         <ModuleList courseId={this.state.courseId}/>
-//                     </div>
-//
-//                     <div className="col-8">
-//                         <Route path="/course/:courseId/edit/module/:moduleId/lesson"
-//                                component={LessonTabs}></Route>
-//                     </div>
-//
-//                 </div>
-//             </div>
+            <div className="container">
+                <div>
+                    <TopicList moduleId={this.state.moduleId} courseId={this.state.courseId} lessonId={this.state.lessonId}/>
+                </div>
+                <div className="row">
+                    <Route path="/course/:courseId/edit/module/:moduleId/lesson/:lessonId/topic/:topicId"
+                           component={TopicEditor}></Route>
+                </div>
+            </div>
         );
     }
 }
