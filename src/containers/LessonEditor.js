@@ -6,6 +6,7 @@ import LessonTab from './LessonTabs'
 class LessonEditor extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {courseId:'', moduleId: '', lessonId: ''};
         this.setLessonId = this.setLessonId.bind(this);
         this.setModuleId = this.setModuleId.bind(this);
@@ -34,7 +35,7 @@ class LessonEditor extends React.Component {
     }
 
     setLessonId(lessonId) {
-        this.state({lessonId: lessonId});
+        this.setState({lessonId: lessonId});
     }
 
 //

@@ -7,12 +7,14 @@ import CourseServiceClient from "../services/CourseServiceClient";
 export default class LessonTabs
     extends React.Component {
     constructor(props) {
-        //console.log(props);
+        console.log('he');
+        console.log(props);
         super(props);
         this.state = {
             lesson: {title: 'New Module'},
             lessons: [],
-            moduleId: ''
+            moduleId: '',
+            courseId:''
         }
 
         this.LessonService = LessonServiceClient.instance;
@@ -20,16 +22,23 @@ export default class LessonTabs
         this.deleteLesson = this.deleteLesson.bind(this);
         this.createLesson = this.createLesson.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
+        this.setCourseId = this.setCourseId.bind(this);
 
 
     }
 
     componentDidMount() {
+        console.log(this.props.courseId);
+
         this.setModuleId(this.props.moduleId);
+        this.setCourseId(this.props.courseId);
 
     }
 
     componentWillReceiveProps(newProps) {
+
+        // console.log(newProps.courseId);
+        this.setCourseId(newProps.courseId);
         this.setModuleId(newProps.moduleId);
         this.findAllLessonsForModule(newProps.moduleId);
     }
@@ -70,6 +79,11 @@ export default class LessonTabs
             )
     }
 
+    setCourseId(courseId){
+
+        this.setState({courseId: courseId});
+    }
+
 
     // createModule() {
     //     // console.log(this.state.module);
@@ -83,15 +97,16 @@ export default class LessonTabs
 
 
     renderTabOfLesson() {
+        //console.log(this.state);
         let lessons = this.state.lessons.map(
 
             (lesson) => {
-                return (<LessonItem key={lesson.id} lesson={this.state.lesson}
-                                    moduleId={this.moduleId} delete={this.deleteLesson}
-                                    lessonId={lesson.id}/>)
+                return (<LessonItem key={lesson.id} lesson={lesson}
+                                    moduleId={this.state.moduleId} delete={this.deleteLesson}
+                                    lessonId={lesson.id} courseId={this.state.courseId}/>)
             }
         );
-        console.log(lessons);
+        //console.log(lessons);
         return lessons;
     }
 
@@ -104,7 +119,6 @@ export default class LessonTabs
     render() {
         return (
             <div>
-                {console.log(this.state.lessons)}
                 <div className="input-group-append">
                     <input className="form-control container-fluid "
                            onChange={this.titleChanged}

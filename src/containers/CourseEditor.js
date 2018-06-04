@@ -1,6 +1,5 @@
 import React from 'react';
 import ModuleList from './ModuleList'
-import LessonTabs from './LessonTabs'
 import { Route} from 'react-router-dom'
 import ModuleEditor from "./ModuleEditor";
 

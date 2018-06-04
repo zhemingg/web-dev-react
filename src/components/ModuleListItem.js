@@ -12,7 +12,7 @@ export default class ModuleListItem
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps);
+        //console.log(newProps);
         if (newProps.selectedModuleId === this.props.moduleId) {
             this.setState({styleOfList: {margin: "5px 10px", backgroundColor: '#E0FFFF'}});
         } else {

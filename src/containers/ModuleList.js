@@ -71,6 +71,7 @@ class ModuleList extends React.Component {
                                    delete={this.deleteModule}
                                    selectedModuleId={this.state.selectedModule}/>
         });
+        //console.log(modules);
         return modules;
     }
 

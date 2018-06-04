@@ -6,6 +6,7 @@ import LessonEditor from './LessonEditor';
 class ModuleEditor extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props);
         this.setCourseId = this.setCourseId.bind(this);
         this.setModuleId = this.setModuleId.bind(this);
         this.state = {courseId: '', moduleId: ''}
@@ -14,6 +15,7 @@ class ModuleEditor extends React.Component {
     componentDidMount() {
         this.setCourseId(this.props.match.params.courseId);
         this.setModuleId(this.props.match.params.moduleId);
+        // console.log(this.props.match.params.courseId);
     }
 
     componentWillReceiveProps(newProps) {
@@ -22,6 +24,7 @@ class ModuleEditor extends React.Component {
     }
 
     setCourseId(courseId) {
+        console.log(courseId);
         this.setState({courseId: courseId});
     }
     setModuleId(moduleId) {
@@ -33,7 +36,8 @@ class ModuleEditor extends React.Component {
         return (
             <div className="container">
                 <div>
-                    <LessonTabs moduleId={this.state.moduleId}/>
+                    {console.log(this.state)}
+                    <LessonTabs moduleId={this.state.moduleId} courseId={this.state.courseId}/>
                 </div>
                 <div className="row">
                     <Route path="/course/:courseId/edit/module/:moduleId/lesson/:lessonId"
