@@ -35,8 +35,8 @@ class ModuleList extends React.Component {
         this.findAllModulesForCourse(newProps.courseId)
     }
 
-    createModule(event) {
-        console.log(this.state.module);
+    createModule() {
+       // console.log(this.state.module);
         this.ModuleService
             .createModule(this.props.courseId, this.state.module)
             .then(

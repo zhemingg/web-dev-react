@@ -12,7 +12,7 @@ export default class ModuleListItem
     }
 
     componentWillReceiveProps(newProps) {
-        //console.log(newProps);
+        console.log(newProps);
         if (newProps.selectedModuleId === this.props.moduleId) {
             this.setState({styleOfList: {margin: "5px 10px", backgroundColor: '#E0FFFF'}});
         } else {
@@ -39,8 +39,7 @@ export default class ModuleListItem
                             // console.log(this.props.moduleId);
                             this.props.selecteModule(this.props.moduleId);
                         }}
-                    to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}`}
-                >
+                    to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}`}>
                     {this.props.title}
                 </Link>
 

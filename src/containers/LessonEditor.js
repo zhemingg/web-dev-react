@@ -1,26 +1,47 @@
- import React from 'react';
- import LessonTab from './LessonTabs'
+import React from 'react';
+import LessonTab from './LessonTabs'
 // import LessonTabs from './LessonTabs'
 // import { Route} from 'react-router-dom'
 //
- class LessonEditor extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.selectCourse = this.selectCourse.bind(this);
-//         this.state = {courseId: ''};
-//     }
+class LessonEditor extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {courseId:'', moduleId: '', lessonId: ''};
+        this.setLessonId = this.setLessonId.bind(this);
+        this.setModuleId = this.setModuleId.bind(this);
+        this.setCourseId = this.setCourseId.bind(this);
+
+    }
+
+    componentDidMount() {
+        this.setLessonId(this.props.match.params.lessonId);
+        this.setModuleId(this.props.match.params.moduleId);
+        this.setCourseId(this.props.match.params.courseId);
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setCourseId(newProps.match.params.courseId);
+        this.setModuleId(newProps.match.params.moduleId);
+        this.setLessonId(newProps.match.params.lessonId);
+    }
+
+    setCourseId(courseId){
+        this.setState({courseId: courseId});
+    }
+
+    setModuleId(moduleId) {
+        this.setState({moduleId: moduleId});
+    }
+
+    setLessonId(lessonId) {
+        this.state({lessonId: lessonId});
+    }
+
 //
-//     selectCourse(courseId) {
-//         this.setState({courseId: courseId});
-//     }
 //
-//     componentDidMount() {
-//         this.selectCourse(this.props.match.params.courseId);
-//     }
-//
-//
-//     render() {
-//         return (
+    render() {
+        return (
+            <h3>Lesson Editor</h3>
 //             <div className="bg-secondary">
 //                 <div className="row">
 //                     <div className="col-4">
@@ -34,8 +55,8 @@
 //
 //                 </div>
 //             </div>
-//         );
-//     }
+        );
+    }
 }
 
- export default LessonEditor;
+export default LessonEditor;

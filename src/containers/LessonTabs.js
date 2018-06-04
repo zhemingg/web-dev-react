@@ -1,53 +1,104 @@
-import React from 'react'
-import LessonItem from '../components/LessonItem'
+import React from 'react';
+import LessonItem from '../components/LessonItem';
+import LessonServiceClient from '../services/LessonServiceClient';
+import ModuleServiceClient from "../services/ModuleServiceClient";
+import CourseServiceClient from "../services/CourseServiceClient";
 
 export default class LessonTabs
     extends React.Component {
     constructor(props) {
-        console.log('new');
-        console.log(props);
+        //console.log(props);
         super(props);
         this.state = {
             lesson: {title: 'New Module'},
             lessons: [],
-            moduleId : '1'
+            moduleId: ''
         }
 
+        this.LessonService = LessonServiceClient.instance;
+        this.setModuleId = this.setModuleId.bind(this);
+        this.deleteLesson = this.deleteLesson.bind(this);
+        this.createLesson = this.createLesson.bind(this);
+        this.titleChanged = this.titleChanged.bind(this);
 
-        this.setModuleId.bind(this);
 
     }
+
     componentDidMount() {
         this.setModuleId(this.props.moduleId);
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setModuleId(newProps.moduleId);
+    }
+
+    deleteLesson(lessonId) {
+        this.LessonService
+            .deleteLesson(lessonId)
+            .then(() => {
+                this.findAllLessonsForModule(this.state.moduleId);
+            });
+
+    }
+
+    titleChanged(event) {
+        console.log(event.target.value);
+        this.setState({lesson: {title: event.target.value}});
+    }
+
+    findAllLessonsForModule(moduleId) {
+        this.LessonService
+            .findAllLessonsForModule(moduleId)
+            .then((lessons) => {
+                this.setLessons(lessons);
+            });
+    }
+
+    setLessons(lessons){
+        this.setState({lessons:lessons});
+    }
+
+    createLesson() {
         console.log(this.state.moduleId);
-        console.log('did');
+        console.log(this.state.lesson);
+        this.LessonService
+            .createLesson(this.state.moduleId, this.state.lesson);
     }
-    componentWillReceiveProps(newProps){
-        console.log(newProps);
-       this.setModuleId(newProps.moduleId);
-    }
+
+
+    // createModule() {
+    //     // console.log(this.state.module);
+    //     this.ModuleService
+    //         .createModule(this.props.courseId, this.state.module)
+    //         .then(
+    //             () => {this.findAllModulesForCourse(this.state.courseId)}
+    //         )
+    //
+    // }
 
 
     renderTabOfLesson() {
         let lessons = this.state.lessons.map(
             (lesson) => {
                 return (<LessonItem key={lesson.id} lesson={this.state.lesson}
-                                    courseId={this.props.match.params.courseId}
-                                    moduleId={this.props.match.params.moduleId}/>)
+                                    moduleId={this.moduleId} delete={this.deleteLesson}
+                                    lessonId={lesson.id}/>)
             }
         );
         return lessons;
     }
 
-    setModuleId(moduleId){
+    setModuleId(moduleId) {
         this.setState({moduleId: moduleId});
     }
+
+
 
     render() {
         return (
             <div>
-                <h4>{this.state.moduleId}123</h4>
-                {console.log(this.state)}
+                {console.log(this.state.lessons)}
                 <div className="input-group-append">
                     <input className="form-control container-fluid "
                            onChange={this.titleChanged}
