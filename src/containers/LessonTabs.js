@@ -31,6 +31,7 @@ export default class LessonTabs
 
     componentWillReceiveProps(newProps) {
         this.setModuleId(newProps.moduleId);
+        this.findAllLessonsForModule(newProps.moduleId);
     }
 
     deleteLesson(lessonId) {
@@ -63,7 +64,10 @@ export default class LessonTabs
         console.log(this.state.moduleId);
         console.log(this.state.lesson);
         this.LessonService
-            .createLesson(this.state.moduleId, this.state.lesson);
+            .createLesson(this.state.moduleId, this.state.lesson)
+            .then(
+                () => this.findAllLessonsForModule(this.state.moduleId)
+            )
     }
 
 
@@ -80,12 +84,14 @@ export default class LessonTabs
 
     renderTabOfLesson() {
         let lessons = this.state.lessons.map(
+
             (lesson) => {
                 return (<LessonItem key={lesson.id} lesson={this.state.lesson}
                                     moduleId={this.moduleId} delete={this.deleteLesson}
                                     lessonId={lesson.id}/>)
             }
         );
+        console.log(lessons);
         return lessons;
     }
 

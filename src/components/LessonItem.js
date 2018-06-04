@@ -12,7 +12,7 @@ export default class LessonItem extends React.Component {
         return (
         <ul className='list-group-item nav-link'>
             <Link to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}/lesson/${this.props.lessonId}`}>
-                {this.props.module.title}
+                {this.props.lesson.title}
             </Link>
 
             <span className="float-right">
