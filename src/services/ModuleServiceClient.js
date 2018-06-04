@@ -4,7 +4,7 @@ const MODULE_ID_URL = 'http://localhost:8080/api/module/MODULE_ID';
 
 
 let _singleton = Symbol();
-export default class ModuleService {
+export default class ModuleServiceClient {
     constructor(singletonToken) {
         if (_singleton !== singletonToken)
             throw new Error('Singleton!!!');
@@ -39,7 +39,7 @@ export default class ModuleService {
 
     static get instance() {
         if(!this[_singleton])
-            this[_singleton] = new ModuleService(_singleton);
+            this[_singleton] = new ModuleServiceClient(_singleton);
         return this[_singleton]
     }
 }

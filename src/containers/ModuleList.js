@@ -1,7 +1,7 @@
 import React from 'react';
 import ModuleListItem from '../components/ModuleListItem';
-import ModuleService from '../services/ModuleService';
-import CourseService from "../services/CourseService";
+import ModuleServiceClient from '../services/ModuleServiceClient';
+import CourseServiceClient from "../services/CourseServiceClient";
 
 class ModuleList extends React.Component {
 
@@ -18,11 +18,12 @@ class ModuleList extends React.Component {
         this.titleChanged = this.titleChanged.bind(this);
         this.createModule = this.createModule.bind(this);
         this.setCourseId = this.setCourseId.bind(this);
-        this.ModuleService = ModuleService.instance;
-        this.CourseService = CourseService.instance;
+        this.ModuleService = ModuleServiceClient.instance;
+        this.CourseService = CourseServiceClient.instance;
         this.selectModule = this.selectModule.bind(this);
         this.setCourse = this.setCourse.bind(this);
         this.deleteModule = this.deleteModule.bind(this);
+       // this.renderListOfModules = this.renderListOfModules.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -92,7 +93,7 @@ class ModuleList extends React.Component {
     }
 
     selectModule(moduleId){
-        console.log(moduleId);
+        //console.log(moduleId);
         this.setState({selectedModule: moduleId})
     }
 
@@ -107,12 +108,12 @@ class ModuleList extends React.Component {
 
     render() {
         return (
-            <div className="bg-secondary">
+            <div>
                 <nav id="moduleListNav" className="navbar navbar-expand navbar-dark bg-primary sticky-top"
-                     style={{margin: "10px 0px 5px 0px"}}>
+                     style={{margin: "10px 5px 5px 0px"}}>
                     <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>Back
                     </button>
-                    <h2 style={{color: "white"}}>Editing Course: {this.state.course.title}</h2>
+                    <h2 style={{color: "white"}}>{this.state.course.title}</h2>
                 </nav>
 
                 <ul className="list-group">
@@ -123,7 +124,6 @@ class ModuleList extends React.Component {
                            onChange={this.titleChanged}
                            placeholder="New Module Title"
                            style={{margin:"5px 5px 10px 10px"}} />
-
                     <button onClick={this.createModule} className="btn btn-primary " style={{margin:"5px 10px 10px 5px"}}>
                         <i className="fa fa-plus"></i>
                     </button>
