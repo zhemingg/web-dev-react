@@ -4,15 +4,29 @@ import LessonItem from '../components/LessonItem'
 export default class LessonTabs
     extends React.Component {
     constructor(props) {
+        console.log('new');
         console.log(props);
         super(props);
         this.state = {
             lesson: {title: 'New Module'},
-            lessons: []
+            lessons: [],
+            moduleId : '1'
         }
 
 
+        this.setModuleId.bind(this);
+
     }
+    componentDidMount() {
+        this.setModuleId(this.props.moduleId);
+        console.log(this.state.moduleId);
+        console.log('did');
+    }
+    componentWillReceiveProps(newProps){
+        console.log(newProps);
+       this.setModuleId(newProps.moduleId);
+    }
+
 
     renderTabOfLesson() {
         let lessons = this.state.lessons.map(
@@ -25,9 +39,15 @@ export default class LessonTabs
         return lessons;
     }
 
+    setModuleId(moduleId){
+        this.setState({moduleId: moduleId});
+    }
+
     render() {
         return (
             <div>
+                <h4>{this.state.moduleId}123</h4>
+                {console.log(this.state)}
                 <div className="input-group-append">
                     <input className="form-control container-fluid "
                            onChange={this.titleChanged}

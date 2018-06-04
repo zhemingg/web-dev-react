@@ -39,7 +39,7 @@ export default class ModuleListItem
                             // console.log(this.props.moduleId);
                             this.props.selecteModule(this.props.moduleId);
                         }}
-                    to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}/lesson`}
+                    to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}`}
                 >
                     {this.props.title}
                 </Link>

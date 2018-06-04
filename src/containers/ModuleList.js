@@ -2,6 +2,8 @@ import React from 'react';
 import ModuleListItem from '../components/ModuleListItem';
 import ModuleServiceClient from '../services/ModuleServiceClient';
 import CourseServiceClient from "../services/CourseServiceClient";
+import ModuleEditor from './ModuleEditor';
+
 
 class ModuleList extends React.Component {
 

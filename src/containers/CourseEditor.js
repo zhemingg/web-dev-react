@@ -2,6 +2,7 @@ import React from 'react';
 import ModuleList from './ModuleList'
 import LessonTabs from './LessonTabs'
 import { Route} from 'react-router-dom'
+import ModuleEditor from "./ModuleEditor";
 
 class CourseEditor extends React.Component {
     constructor(props) {
@@ -28,8 +29,8 @@ class CourseEditor extends React.Component {
                         </div>
 
                         <div className="col-8">
-                            <Route path="/course/:courseId/edit/module/:moduleId/lesson"
-                                   component={LessonTabs}></Route>
+                            <Route path="/course/:courseId/edit/module/:moduleId"
+                                   component={ModuleEditor}></Route>
                         </div>
 
                     </div>
