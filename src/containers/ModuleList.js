@@ -2,7 +2,7 @@ import React from 'react';
 import ModuleListItem from '../components/ModuleListItem';
 import ModuleServiceClient from '../services/ModuleServiceClient';
 import CourseServiceClient from "../services/CourseServiceClient";
-import ModuleEditor from './ModuleEditor';
+import {Link} from 'react-router-dom';
 
 
 class ModuleList extends React.Component {
@@ -12,9 +12,9 @@ class ModuleList extends React.Component {
         this.state = {
             courseId: '',
             course: '',
-            module: {title: 'New Module', selectedId : ''},
+            module: {title: 'New Module', selectedId: ''},
             modules: [],
-            selectedModule:''
+            selectedModule: ''
         };
 
         this.titleChanged = this.titleChanged.bind(this);
@@ -25,7 +25,7 @@ class ModuleList extends React.Component {
         this.selectModule = this.selectModule.bind(this);
         this.setCourse = this.setCourse.bind(this);
         this.deleteModule = this.deleteModule.bind(this);
-       // this.renderListOfModules = this.renderListOfModules.bind(this);
+        // this.renderListOfModules = this.renderListOfModules.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -36,11 +36,13 @@ class ModuleList extends React.Component {
     }
 
     createModule() {
-       // console.log(this.state.module);
+        // console.log(this.state.module);
         this.ModuleService
             .createModule(this.props.courseId, this.state.module)
             .then(
-                () => {this.findAllModulesForCourse(this.state.courseId)}
+                () => {
+                    this.findAllModulesForCourse(this.state.courseId)
+                }
             )
 
     }
@@ -66,8 +68,8 @@ class ModuleList extends React.Component {
             return <ModuleListItem key={module.id}
                                    title={module.title}
                                    selecteModule={this.selectModule}
-                                   moduleId = {module.id}
-                                   courseId = {this.state.courseId}
+                                   moduleId={module.id}
+                                   courseId={this.state.courseId}
                                    delete={this.deleteModule}
                                    selectedModuleId={this.state.selectedModule}/>
         });
@@ -95,7 +97,7 @@ class ModuleList extends React.Component {
         this.setState({modules: modules})
     }
 
-    selectModule(moduleId){
+    selectModule(moduleId) {
         //console.log(moduleId);
         this.setState({selectedModule: moduleId})
     }
@@ -114,9 +116,11 @@ class ModuleList extends React.Component {
             <div>
                 <nav id="moduleListNav" className="navbar navbar-expand navbar-dark bg-primary sticky-top"
                      style={{margin: "10px 5px 5px 0px"}}>
-                    <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>Back
-                    </button>
-                    <h2 style={{color: "white"}}>{this.state.course.title}</h2>
+                    <Link to={`/`}>
+                        <button id="btnFld" className="btn btn-danger my-2 my-sm-0" onClick={this.createCourse}>Back
+                        </button>
+                    </Link>
+                    <h1 style={{color: "white"}}>{this.state.course.title}</h1>
                 </nav>
 
                 <ul className="list-group">
@@ -126,8 +130,9 @@ class ModuleList extends React.Component {
                     <input className="form-control container-fluid "
                            onChange={this.titleChanged}
                            placeholder="New Module Title"
-                           style={{margin:"5px 5px 10px 10px"}} />
-                    <button onClick={this.createModule} className="btn btn-primary " style={{margin:"5px 10px 10px 5px"}}>
+                           style={{margin: "5px 5px 10px 10px"}}/>
+                    <button onClick={this.createModule} className="btn btn-primary "
+                            style={{margin: "5px 10px 10px 5px"}}>
                         <i className="fa fa-plus"></i>
                     </button>
                 </div>
