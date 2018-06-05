@@ -1,5 +1,5 @@
-const MODULE_API_URL = 'http://localhost:8080/api/course/CID/module';
-const MODULE_ID_URL = 'http://localhost:8080/api/module/MODULE_ID';
+const MODULE_API_URL = 'https://zhemingg-assignment.herokuapp.com/api/course/CID/module';
+const MODULE_ID_URL = 'https://zhemingg-assignment.herokuapp.com/api/module/MODULE_ID';
 
 let _singleton = Symbol();
 export default class ModuleServiceClient {

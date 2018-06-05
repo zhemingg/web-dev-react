@@ -1,6 +1,6 @@
 let _singleton = Symbol();
-const TOPIC_API_URL = 'http://localhost:8080/api/course/CID/module/MID/lesson/LID/topic';
-const TOPIC_DELETE_API_URL = 'http://localhost:8080/api/topic/TOPIC_ID';
+const TOPIC_API_URL = 'https://zhemingg-assignment.herokuapp.com/api/course/CID/module/MID/lesson/LID/topic';
+const TOPIC_DELETE_API_URL = 'https://zhemingg-assignment.herokuapp.com/api/topic/TOPIC_ID';
 
 
 export default class LessonServiceClient {
