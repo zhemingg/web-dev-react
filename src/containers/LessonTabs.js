@@ -14,7 +14,8 @@ export default class LessonTabs
             lesson: {title: 'New Module'},
             lessons: [],
             moduleId: '',
-            courseId:''
+            courseId:'',
+            selectedLesson:''
         }
 
         this.LessonService = LessonServiceClient.instance;
@@ -23,6 +24,7 @@ export default class LessonTabs
         this.createLesson = this.createLesson.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
         this.setCourseId = this.setCourseId.bind(this);
+        this.setSelectedLesson = this.setSelectedLesson.bind(this);
 
 
     }
@@ -50,6 +52,10 @@ export default class LessonTabs
                 this.findAllLessonsForModule(this.state.moduleId);
             });
 
+    }
+
+    setSelectedLesson(lessonId){
+        this.setState({selectedLesson:lessonId});
     }
 
     titleChanged(event) {
@@ -85,15 +91,6 @@ export default class LessonTabs
     }
 
 
-    // createModule() {
-    //     // console.log(this.state.module);
-    //     this.ModuleService
-    //         .createModule(this.props.courseId, this.state.module)
-    //         .then(
-    //             () => {this.findAllModulesForCourse(this.state.courseId)}
-    //         )
-    //
-    // }
 
 
     renderTabOfLesson() {
@@ -103,7 +100,9 @@ export default class LessonTabs
             (lesson) => {
                 return (<LessonItem key={lesson.id} lesson={lesson}
                                     moduleId={this.state.moduleId} delete={this.deleteLesson}
-                                    lessonId={lesson.id} courseId={this.state.courseId}/>)
+                                    lessonId={lesson.id} courseId={this.state.courseId}
+                                    selectedLesson = {this.state.selectedLesson}
+                                    selectFunction = {this.setSelectedLesson}/>)
             }
         );
         //console.log(lessons);
@@ -130,7 +129,7 @@ export default class LessonTabs
                     </button>
                 </div>
                 <div>
-                    <ul className="nav nav-tabs" style={{marginTop: "10px"}}>
+                    <ul className="nav nav-pills" style={{marginTop: "10px", marginRight: "5px"}}>
                         {this.renderTabOfLesson()}
                     </ul>
                 </div>

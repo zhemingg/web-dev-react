@@ -20,25 +20,18 @@ export default class ModuleListItem
         }
     }
 
-    // setStateActive (){
-    //     this.state.styleOfList = {margin: "5px 10px", backgroundColor: "#E0FFFF"};
-    //     this.setState({styleOfList: {margin: "5px 10px", backgroundColor: 'white'}});
-    // }
-    // setStateBack(){
-    //     this.state.styleOfList = {margin: "5px 10px", backgroundColor: 'white'};
-    // }
 
 
     render() {
 
         return (
-            <li className='list-group-item' style={this.state.styleOfList}>
+            <li className='list-group-item' style={this.state.styleOfList}
+                onClick={
+                () => {
+                    // console.log(this.props.moduleId);
+                    this.props.selecteModule(this.props.moduleId);
+                }}>
                 <Link
-                    onClick={
-                        () => {
-                            // console.log(this.props.moduleId);
-                            this.props.selecteModule(this.props.moduleId);
-                        }}
                     to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}`}>
                     {this.props.title}
                 </Link>
