@@ -16,7 +16,7 @@ export default class TopicItem extends React.Component {
                 <span className="float-right">
                     <i className="fa fa-trash" onClick={() => {
                         if (window.confirm('Are you sure to delete this topic?')) {
-                            this.props.delete(this.props.lessonId)
+                            this.props.delete(this.props.topicId)
                         }
                     }} style={{color: "red"}}></i>
             </span>

@@ -21,6 +21,7 @@ export default class TopicList extends React.Component {
 
         this.titleChanged = this.titleChanged.bind(this);
         this.createTopic = this.createTopic.bind(this);
+        this.deleteTopic = this.deleteTopic.bind(this);
 
     }
 
@@ -47,6 +48,14 @@ export default class TopicList extends React.Component {
             .then(
                 () => this.findAllTopicsForLesson(this.state.lessonId)
             );
+    }
+
+    deleteTopic(topicId){
+        this.TopicService
+            .deleteTopic(topicId)
+            .then(() => {
+                this.findAllTopicsForLesson(this.state.lessonId);
+            });
     }
 
     setCourseId(courseId) {
@@ -85,7 +94,7 @@ export default class TopicList extends React.Component {
 
             (topic) => {
                 return (<TopicItem key={topic.id} topic={topic}
-                                   moduleId={this.state.moduleId}
+                                   moduleId={this.state.moduleId} delete={this.deleteTopic}
                                    lessonId={this.state.lessonId} courseId={this.state.courseId}
                                    topicId = {topic.id} />)
             }
