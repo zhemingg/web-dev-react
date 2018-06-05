@@ -1,6 +1,7 @@
 let _singleton = Symbol();
 const TOPIC_API_URL = 'http://localhost:8080/api/course/CID/module/MID/lesson/LID/topic';
 
+
 export default class LessonServiceClient {
 
     constructor(singletonToken) {
@@ -22,6 +23,16 @@ export default class LessonServiceClient {
             }).then(function (response)
         { return response.json(); })
     }
+
+    findAllTopicsForLesson(lessonId) {
+        return fetch(
+            TOPIC_API_URL
+                .replace('LID', lessonId))
+            .then(function (response) {
+                return response.json();
+            })
+    }
+
 
 
 

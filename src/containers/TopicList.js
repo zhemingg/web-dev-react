@@ -1,21 +1,23 @@
 import React from 'react';
 import TopicServiceClient from '../services/TopicServiceClient';
+import TopicItem from '../components/TopicItem'
 
 export default class TopicList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            topics:[],
-            topic:{title:'New Topic'},
-            courseId:'',
-            moduleId:'',
-            lessonId:''
+            topics: [],
+            topic: {title: 'New Topic'},
+            courseId: '',
+            moduleId: '',
+            lessonId: ''
         };
         this.TopicService = TopicServiceClient.instance;
         this.setCourseId = this.setCourseId.bind(this);
         this.setModuleId = this.setModuleId.bind(this);
         this.setLessonId = this.setLessonId.bind(this);
+        this.setTopics = this.setTopics.bind(this);
 
         this.titleChanged = this.titleChanged.bind(this);
         this.createTopic = this.createTopic.bind(this);
@@ -27,19 +29,26 @@ export default class TopicList extends React.Component {
         this.setCourseId(this.props.courseId);
         this.setLessonId(this.props.lessonId);
     }
-    componentWillReceiveProps(newProps){
+
+    componentWillReceiveProps(newProps) {
         this.setCourseId(newProps.courseId);
         this.setModuleId(newProps.moduleId);
         this.setLessonId(newProps.lessonId);
+
+        this.findAllTopicsForLesson(newProps.lessonId);
     }
 
-    createTopic (){
+    createTopic() {
         // if (this.state.topic.title === ''){
         //     this.setState({topic : {title : "New Topic"}});
         // }
         this.TopicService
-            .createTopic( this.state.lessonId, this.state.topic);
+            .createTopic(this.state.lessonId, this.state.topic)
+            .then(
+                () => this.findAllTopicsForLesson(this.state.lessonId)
+            );
     }
+
     setCourseId(courseId) {
         this.setState({courseId: courseId});
     }
@@ -47,8 +56,13 @@ export default class TopicList extends React.Component {
     setModuleId(moduleId) {
         this.setState({moduleId: moduleId});
     }
+
     setLessonId(lessonId) {
         this.setState({lessonId: lessonId});
+    }
+
+    setTopics(topics) {
+        this.setState({topics: topics});
     }
 
     titleChanged(event) {
@@ -56,18 +70,46 @@ export default class TopicList extends React.Component {
         this.setState({lesson: {title: event.target.value}});
     }
 
+    findAllTopicsForLesson(lessonId) {
+        this.TopicService
+            .findAllTopicsForLesson(lessonId)
+            .then(
+                (topics) => {
+                    this.setTopics(topics)
+                }
+            )
+    }
+
+    renderTopics(){
+        let topics = this.state.topics.map(
+
+            (topic) => {
+                return (<TopicItem key={topic.id} topic={topic}
+                                   moduleId={this.state.moduleId}
+                                   lessonId={this.state.lessonId} courseId={this.state.courseId}
+                                   topicId = {topic.id} />)
+            }
+        );
+        return topics;
+    }
+
 
     render() {
         return (
-            <div className="input-group-append">
-                <input className="form-control container-fluid "
-                       onChange={this.titleChanged}
-                       placeholder="New Topic Title"
-                       style={{margin: "10px 5px 10px 10px"}}/>
-                <button onClick={this.createTopic} className="btn btn-primary "
-                        style={{margin: "5px 10px 10px 5px"}}>
-                    <i className="fa fa-plus"></i>
-                </button>
+            <div>
+                <div className="input-group-append">
+                    <input className="form-control container-fluid "
+                           onChange={this.titleChanged}
+                           placeholder="New Topic Title"
+                           style={{margin: "10px 5px 10px 10px"}}/>
+                    <button onClick={this.createTopic} className="btn btn-primary "
+                            style={{margin: "5px 10px 10px 5px"}}>
+                        <i className="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div>
+                    {this.renderTopics()}
+                </div>
             </div>
 
         )

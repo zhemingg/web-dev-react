@@ -17,7 +17,7 @@ export default class LessonItem extends React.Component {
 
             <span className="float-right">
                     <i className="fa fa-trash" onClick={() => {
-                        if (window.confirm('Are you sure to delete this module?')) {
+                        if (window.confirm('Are you sure to delete this Lesson?')) {
                             this.props.delete(this.props.lessonId)
                         }
                     }} style={{color: "red"}}></i>
