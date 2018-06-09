@@ -1,4 +1,6 @@
 import React from 'react';
+import App from '../widgetList/components/Widget'
+
 
 export default class TopicEditor extends React.Component{
     constructor(props) {
@@ -7,7 +9,7 @@ export default class TopicEditor extends React.Component{
 
     render() {
         return (
-            <h4>Topic Editor</h4>
+            <App/>
         )}
 
 }
