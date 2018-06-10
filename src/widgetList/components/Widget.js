@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 
 
-const Widget = ({widget}) => (<ui> {widget.text} </ui>);
+const Widget = ({widget}) => (<ui> {widget.id}{widget.text} </ui>);
 
 
 const mapStateToProps = state => ({
