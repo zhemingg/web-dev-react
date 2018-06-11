@@ -6,6 +6,7 @@ import * as actions from '../actions/index'
 class WidgetList extends Component {
     constructor(props) {
         super(props)
+        this.props.findAllWidgets()
     }
 
     render() {
@@ -34,6 +35,7 @@ const stateToPropertiesMapper = (state) => ({
 
 const dispatcherToPropsMapper = (dispatch) => ({
     addWidget: () => actions.addWidget(dispatch),
+    findAllWidgets: () => actions.findAllWidgets(dispatch)
 })
 
 const App = connect(

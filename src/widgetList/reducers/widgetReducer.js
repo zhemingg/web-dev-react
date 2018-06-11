@@ -9,13 +9,14 @@ let initialState = {
 };
 
 let index = 3;
+let newState;
 export const widgetReducer = (state = initialState, action) => {
     switch (action.type) {
         case constants.ADD_WIDGET:
             return {
                 widgets: [
                     ...state.widgets,
-                    {id: index++, text: 'New widget'}
+                    {id: index++, text: 'New widget', widgetType: 'Paragraph'}
                 ]
             }
         case constants.DELETE_WIDGET:
@@ -24,6 +25,20 @@ export const widgetReducer = (state = initialState, action) => {
                     widget.id !== action.id
                 ))
             }
+        case constants.FIND_ALL_WIDGETS:
+            newState = Object.assign({}, state);
+            newState.widgets = action.widgets;
+            return newState;
+        case constants.SELECT_WIDGET_TYPE:
+            let newState = {
+                widgets: state.widgets.filter((widget) => {
+                    if(widget.id === action.id) {
+                        widget.widgetType = action.widgetType
+                    }
+                    return true;
+                })
+            }
+            return JSON.parse(JSON.stringify(newState))
         default:
             return state;
     }
