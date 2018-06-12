@@ -25,6 +25,10 @@ export const headingSizeChanged = (dispatch, widgetId, newSize) => (
         size: newSize})
 )
 
+export const save = dispatch => (
+    dispatch({type: constants.SAVE})
+)
+
 // export const deleteWidget = (dispatch, selectedId) => (
 //     dispatch({type: constants.DELETE_WIDGET, id: selectedId})
 // )

@@ -8,13 +8,12 @@ import {Provider} from 'react-redux';
 import {widgetReducer} from "./widgetList/reducers/widgetReducer";
 
 
-
 let store = createStore(widgetReducer);
 
 
 ReactDOM.render(
     <Provider store={store}>
-    <CourseManager/>
+        <CourseManager/>
     </Provider>,
     document.getElementById('root')
 );

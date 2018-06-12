@@ -1,16 +1,8 @@
 import * as constants from "../constants/index"
 
-let initialState = {
-    widgets: [
-        {id: 0, text: 'widget 1'},
-        {id: 1, text: 'widget 2'},
-        {id: 2, text: 'widget 3'}
-    ]
-};
-
 let index = 3;
 let newState;
-export const widgetReducer = (state = initialState, action) => {
+export const widgetReducer = (state = {widgets: []}, action) => {
     switch (action.type) {
         case 'test':
             alert('test');
@@ -61,6 +53,14 @@ export const widgetReducer = (state = initialState, action) => {
                     return Object.assign({}, widget)
                 })
             }
+        case constants.SAVE:
+            fetch('http://localhost:8080/api/widget/save', {
+                method: 'post',
+                body: JSON.stringify(state.widgets),
+                headers: {
+                    'content-type': 'application/json'}
+            })
+            return state;
         default:
             return state;
     }
