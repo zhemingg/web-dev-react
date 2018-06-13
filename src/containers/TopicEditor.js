@@ -4,15 +4,14 @@ import App from '../widgetList/containers/WidgetList';
 
 export default class TopicEditor extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+       // console.log(props);
     }
 
 
     render() {
-
-
         return (
-            <App/>
+            <App topicId={this.props.match.params.topicId}/>
         )
     }
 

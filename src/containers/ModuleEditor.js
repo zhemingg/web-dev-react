@@ -24,7 +24,7 @@ class ModuleEditor extends React.Component {
     }
 
     setCourseId(courseId) {
-        console.log(courseId);
+        //console.log(courseId);
         this.setState({courseId: courseId});
     }
     setModuleId(moduleId) {

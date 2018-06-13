@@ -69,6 +69,12 @@ const Widget = ({widget, dispatch}) => {
     return (
         <ul>
             {widget.id}{widget.widgetType}
+            <button className='btn btn-warning'>
+                <i className="fa fa-arrow-down"></i>
+            </button>
+            <button className='btn btn-warning'>
+                <i className="fa fa-arrow-up"></i>
+            </button>
             <select value={widget.widgetType}
                     onChange={e =>
                         dispatch({

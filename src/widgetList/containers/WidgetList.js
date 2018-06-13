@@ -1,22 +1,33 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import WidgetContainer from '../components/Widget'
-import * as actions from '../actions/index'
+import WidgetContainer from '../components/Widget';
+import * as actions from '../actions/index';
+
 
 class WidgetList extends Component {
     constructor(props) {
         super(props)
-        this.props.findAllWidgets()
+        this.props.findAllWidgetsForTopic(this.props.topicId)
     }
+
+    componentWillReceiveProps(newProps){
+        if(this.props.topicId === newProps.topicId) {
+            return;
+        } else {
+            this.props.findAllWidgetsForTopic(newProps.topicId)
+        }
+    }
+
 
     render() {
         return (
             <div>
                 <h2>Widget List</h2>
-                <button  onClick={this.props.save}>
+                <button  onClick={() => this.props.save(this.props.topicId)}>
                     Save
                 </button>
                 <ul>
+                    {console.log(this.props.widgets)}
                     {this.props.widgets.map(
                         widget => (
                             <WidgetContainer widget={widget} key={widget.id}/>
@@ -36,10 +47,15 @@ const stateToPropertiesMapper = (state) => ({
     widgets: state.widgets,
 });
 
+
 const dispatcherToPropsMapper = (dispatch) => ({
     addWidget: () => actions.addWidget(dispatch),
-    findAllWidgets: () => actions.findAllWidgets(dispatch),
-    save: () => actions.save(dispatch),
+    findAllWidgetsForTopic: (topicId) => {
+        console.log(topicId);
+        actions.findAllWidgetsForTopic(dispatch, topicId)
+
+    },
+    save: (topicId) => actions.save(dispatch, topicId)
 })
 
 const App = connect(

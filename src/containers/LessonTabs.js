@@ -30,7 +30,7 @@ export default class LessonTabs
     }
 
     componentDidMount() {
-        console.log(this.props.courseId);
+        //console.log(this.props.courseId);
 
         this.setModuleId(this.props.moduleId);
         this.setCourseId(this.props.courseId);

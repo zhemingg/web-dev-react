@@ -2,11 +2,10 @@ import * as constants from "../constants/index"
 
 let index = 3;
 let newState;
-export const widgetReducer = (state = {widgets: []}, action) => {
+let initialState;
+export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
     switch (action.type) {
-        case 'test':
-            alert('test');
-            return state;
+
         case constants.ADD_WIDGET:
             return {
                 widgets: [
@@ -14,16 +13,19 @@ export const widgetReducer = (state = {widgets: []}, action) => {
                     {id: index++, text: 'New widget', widgetType: 'Paragraph'}
                 ]
             }
+
         case constants.DELETE_WIDGET:
             return {
                 widgets: state.widgets.filter(widget => (
                     widget.id !== action.id
                 ))
             }
-        case constants.FIND_ALL_WIDGETS:
+
+        case constants.FIND_ALL_WIDGETS_FOR_TOPIC:
             newState = Object.assign({}, state);
             newState.widgets = action.widgets;
             return newState;
+
         case constants.SELECT_WIDGET_TYPE:
               newState = {
                 widgets: state.widgets.filter((widget) => {
@@ -34,6 +36,7 @@ export const widgetReducer = (state = {widgets: []}, action) => {
                 })
             }
             return JSON.parse(JSON.stringify(newState));
+
         case constants.HEADING_TEXT_CHANGED:
             return {
                 widgets: state.widgets.map(widget => {
@@ -54,7 +57,7 @@ export const widgetReducer = (state = {widgets: []}, action) => {
                 })
             }
         case constants.SAVE:
-            fetch('http://localhost:8080/api/widget/save', {
+            fetch('http://localhost:8080/api/course/CID/module/MID/lesson/LID/topic/TID/widget'.replace('TID', action.topicId), {
                 method: 'post',
                 body: JSON.stringify(state.widgets),
                 headers: {
