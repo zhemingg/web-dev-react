@@ -6,7 +6,7 @@ import {Route} from 'react-router-dom';
 class LessonEditor extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {courseId:'', moduleId: '', lessonId: ''};
         this.setLessonId = this.setLessonId.bind(this);
         this.setModuleId = this.setModuleId.bind(this);

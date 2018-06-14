@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import * as actions from '../actions/index'
-import {DELETE_WIDGET} from "../constants/index"
+import {DELETE_WIDGET, POSITION_DOWN, POSITION_UP} from "../constants/index"
 
 
 const Heading = ({dispatch, widget, preview, headingTextChanged, headingSizeChanged}) => {
@@ -51,9 +51,21 @@ const List = () => (
     <h2>List</h2>
 )
 
+const moveUp = widget => {
+    return {
+        type: 'MOVE_UP', widget: widget
+    }
+}
+
+const moveDown = widget => {
+    return {
+        type: 'MOVE_DOWN', widget: widget
+    }
+}
+
 const dispatchToPropsMapper = dispatch => ({
     headingTextChanged: (widgetId, newText) => {
-        console.log('heading');
+        //console.log('heading');
         actions.headingTextChanged(dispatch, widgetId, newText)
     },
     headingSizeChanged: (widgetId, newSize) => actions.headingSizeChanged(dispatch, widgetId, newSize)
@@ -64,15 +76,21 @@ const stateToPropsMapper = state => ({
 
 const HeadingContainer = connect(stateToPropsMapper, dispatchToPropsMapper)(Heading);
 
+
 const Widget = ({widget, dispatch}) => {
     let selectElement;
     return (
         <ul>
             {widget.id}{widget.widgetType}
-            <button className='btn btn-warning'>
+            <button className='btn btn-warning' onClick={() => {
+                dispatch(moveDown(widget))
+            }}>
                 <i className="fa fa-arrow-down"></i>
             </button>
-            <button className='btn btn-warning'>
+            <button className='btn btn-warning'
+                    onClick={() => {
+                        dispatch(moveUp(widget))
+                    }}>
                 <i className="fa fa-arrow-up"></i>
             </button>
             <select value={widget.widgetType}

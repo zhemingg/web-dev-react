@@ -6,8 +6,9 @@ import * as actions from '../actions/index';
 
 class WidgetList extends Component {
     constructor(props) {
-        super(props)
-        this.props.findAllWidgetsForTopic(this.props.topicId)
+        super(props);
+        this.props.findAllWidgetsForTopic(this.props.topicId);
+
     }
 
     componentWillReceiveProps(newProps){
@@ -18,7 +19,6 @@ class WidgetList extends Component {
         }
     }
 
-
     render() {
         return (
             <div>
@@ -27,11 +27,8 @@ class WidgetList extends Component {
                     Save
                 </button>
                 <ul>
-                    {console.log(this.props.widgets)}
                     {this.props.widgets.map(
-                        widget => (
-                            <WidgetContainer widget={widget} key={widget.id}/>
-                        )
+                        widget => (<WidgetContainer widget={widget} key={widget.id}/>)
                     )}
                 </ul>
                 <button className="btn btn-danger"
@@ -51,7 +48,7 @@ const stateToPropertiesMapper = (state) => ({
 const dispatcherToPropsMapper = (dispatch) => ({
     addWidget: () => actions.addWidget(dispatch),
     findAllWidgetsForTopic: (topicId) => {
-        console.log(topicId);
+        //console.log(topicId);
         actions.findAllWidgetsForTopic(dispatch, topicId)
 
     },
