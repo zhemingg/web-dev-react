@@ -9,7 +9,8 @@ export default class TopicItem extends React.Component {
     render() {
         return (
             <ul className='list-group-item nav-link'>
-                <Link to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${this.props.topicId}`}>
+                <Link
+                    to={`/course/${this.props.courseId}/edit/module/${this.props.moduleId}/lesson/${this.props.lessonId}/topic/${this.props.topicId}`}>
                     {this.props.topic.title}
                 </Link>
 
@@ -19,7 +20,7 @@ export default class TopicItem extends React.Component {
                             this.props.delete(this.props.topicId)
                         }
                     }} style={{color: "red"}}></i>
-            </span>
+                </span>
             </ul>
         )
     }

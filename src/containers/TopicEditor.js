@@ -11,7 +11,9 @@ export default class TopicEditor extends React.Component {
 
     render() {
         return (
-            <App topicId={this.props.match.params.topicId}/>
+            <div className="container">
+                <App topicId={this.props.match.params.topicId}/>
+            </div>
         )
     }
 

@@ -11,8 +11,8 @@ class WidgetList extends Component {
 
     }
 
-    componentWillReceiveProps(newProps){
-        if(this.props.topicId === newProps.topicId) {
+    componentWillReceiveProps(newProps) {
+        if (this.props.topicId === newProps.topicId) {
             return;
         } else {
             this.props.findAllWidgetsForTopic(newProps.topicId)
@@ -21,20 +21,37 @@ class WidgetList extends Component {
 
     render() {
         return (
+
             <div>
-                <h2>Widget List</h2>
-                <button  onClick={() => this.props.save(this.props.topicId)}>
-                    Save
-                </button>
-                <ul>
+                <div className='row'>
+                    <div className='col-12'>
+                        <button onClick={() => this.props.save(this.props.topicId)}
+                                className='float-right btn btn-success'
+                                style={{marginBottom:'10px'}}>Save
+                        </button>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col-12'>
                     {this.props.widgets.map(
                         widget => (<WidgetContainer widget={widget} key={widget.id}/>)
                     )}
-                </ul>
-                <button className="btn btn-danger"
-                        onClick={this.props.addWidget}>
-                    <i className="fa fa-plus"></i>
-                </button>
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <div className='col-12'>
+                    <button className="btn btn-danger float-right"
+                            onClick={this.props.addWidget}
+                            type='button'
+                            style={{marginBottom:'10px'}}>
+                        <i className="fa fa-plus"></i>
+                    </button>
+                    </div>
+                </div>
+
+
             </div>
         )
     }

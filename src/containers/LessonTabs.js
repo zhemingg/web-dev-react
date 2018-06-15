@@ -119,10 +119,10 @@ export default class LessonTabs
         return (
             <div>
                 <div className="input-group-append">
-                    <input className="form-control container-fluid "
+                    <input className="form-control container-fluid"
                            onChange={this.titleChanged}
                            placeholder="New Lesson Title"
-                           style={{margin: "10px 5px 10px 10px"}}/>
+                           style={{margin: "10px 5px 10px 0px"}}/>
                     <button onClick={this.createLesson} className="btn btn-primary "
                             style={{margin: "5px 10px 10px 5px"}}>
                         <i className="fa fa-plus"></i>

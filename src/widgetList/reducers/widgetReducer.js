@@ -20,25 +20,32 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
     switch (action.type) {
 
         case constants.ADD_WIDGET:
+            let max = 0;
+            for (let i = 0; i < state.widgets.length; i++){
+                max = Math.max(max, state.widgets[i].id);
+            }
+
             return {
                 widgets: [
                     ...state.widgets,
                     {
                         widgetOrder: state.widgets.length,
                         text: 'New widget',
-                        widgetType: 'Paragraph',
-                        id: state.widgets.length + 1
+                        widgetType: 'Heading Widget',
+                        id: ++max,
+                        size: '1',
+                        name: 'Widget Name',
+                        heref: '',
+
                     }
-                ],
-                topicId: state.topicId
+                ]
             }
 
         case constants.DELETE_WIDGET:
             return {
                 widgets: assignWidgetOrder(
                     state.widgets.filter(widget => (widget.id !== action.id))
-                ),
-                topicId: state.topicId
+                )
             }
 
         case constants.FIND_ALL_WIDGETS_FOR_TOPIC:
@@ -53,8 +60,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.widgetType = action.widgetType
                     }
                     return true;
-                }),
-                topicId: state.topicId
+                })
 
             }
             return JSON.parse(JSON.stringify(newState));
@@ -66,8 +72,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.text = action.text
                     }
                     return Object.assign({}, widget)
-                }),
-                topicId: state.topicId
+                })
             }
 
         case constants.HEADING_SIZE_CHANGED:
@@ -77,8 +82,17 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.size = action.size
                     }
                     return Object.assign({}, widget)
-                }),
-                topicId: state.topicId
+                })
+            }
+
+        case constants.HEADING_NAME_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        widget.name = action.name
+                    }
+                    return Object.assign({}, widget)
+                })
             }
         case constants.MOVE_UP:
             console.log(state.widgets);
@@ -89,7 +103,6 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
             } else {
                 newState = {
                     widgets: assignWidgetOrder(exchange(index, index-1, state.widgets)),
-                    topicId: state.topicId
                 };
 
                 console.log(newState.widgets);
@@ -106,7 +119,6 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
             } else {
                 newState = {
                     widgets: assignWidgetOrder(exchange(index, index+1, state.widgets)),
-                    topicId: state.topicId
                 };
                 return JSON.parse(JSON.stringify(newState));
             }
