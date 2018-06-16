@@ -25,30 +25,40 @@ class WidgetList extends Component {
             <div>
                 <div className='row'>
                     <div className='col-12'>
+                        <button className='float-right btn btn-warning'
+                                onClick={this.props.preview}
+                                style={{marginLeft: '5px'}}>Preview
+                        </button>
                         <button onClick={() => this.props.save(this.props.topicId)}
                                 className='float-right btn btn-success'
-                                style={{marginBottom:'10px'}}>Save
+                                style={{marginBottom: '10px'}}
+                                hidden={this.props.previewMode}>Save
                         </button>
                     </div>
                 </div>
-
+                <div hidden={!this.props.previewMode}>
+                    <h2>Preview</h2>
+                </div>
                 <div className='row'>
                     <div className='col-12'>
-                    {this.props.widgets
-                        .sort((a,b)=> a.widgetOrder - b.widgetOrder)
-                        .map(widget => (<WidgetContainer widget={widget} key={widget.id} lastPosition={this.props.widgets.length - 1}/>)
-                    )}
+                        {this.props.widgets
+                            .sort((a, b) => a.widgetOrder - b.widgetOrder)
+                            .map(widget => (<WidgetContainer widget={widget}
+                                                             key={widget.id}
+                                                             preview={this.props.previewMode}
+                                                             lastPosition={this.props.widgets.length - 1}/>)
+                            )}
                     </div>
                 </div>
 
                 <div className='row'>
                     <div className='col-12'>
-                    <button className="btn btn-danger float-right"
-                            onClick={this.props.addWidget}
-                            type='button'
-                            style={{marginBottom:'10px'}}>
-                        <i className="fa fa-plus"></i>
-                    </button>
+                        <button className="btn btn-danger float-right"
+                                onClick={this.props.addWidget}
+                                type='button'
+                                style={{marginBottom: '10px'}}>
+                            <i className="fa fa-plus"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -59,7 +69,8 @@ class WidgetList extends Component {
 }
 
 const stateToPropertiesMapper = (state) => ({
-    widgets: state.widgets,
+    previewMode: state.preview,
+    widgets: state.widgets
 });
 
 
@@ -70,7 +81,8 @@ const dispatcherToPropsMapper = (dispatch) => ({
         actions.findAllWidgetsForTopic(dispatch, topicId)
 
     },
-    save: (topicId) => actions.save(dispatch, topicId)
+    save: (topicId) => actions.save(dispatch, topicId),
+    preview: () => actions.preview(dispatch)
 })
 
 const App = connect(

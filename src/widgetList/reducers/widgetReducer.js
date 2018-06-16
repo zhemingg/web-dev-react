@@ -16,8 +16,13 @@ function assignWidgetOrder(widgets) {
     return widgets;
 }
 
-export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
+export const widgetReducer = (state = {widgets: [], preview: false}, action) => {
     switch (action.type) {
+        case constants.PREVIEW:
+            return {
+                widgets: state.widgets,
+                preview: !state.preview
+            }
 
         case constants.ADD_WIDGET:
             let max = 0;
@@ -39,19 +44,20 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         src: '',
                         listType: 'unordered'
                     }
-                ]
+                ],
+                preview: state.preview
             }
 
         case constants.DELETE_WIDGET:
             return {
-                widgets: assignWidgetOrder(
-                    state.widgets.filter(widget => (widget.id !== action.id))
-                )
+                widgets: assignWidgetOrder(state.widgets.filter(widget => (widget.id !== action.id))),
+                preview: state.preview
             }
 
         case constants.FIND_ALL_WIDGETS_FOR_TOPIC:
             newState = Object.assign({}, state);
-            newState.widgets = action.widgets
+            newState.widgets = action.widgets;
+            newState.preview = state.preview;
             return newState;
 
         case constants.SELECT_WIDGET_TYPE:
@@ -61,7 +67,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.widgetType = action.widgetType
                     }
                     return true;
-                })
+                }),
+                preview: state.preview
 
             }
             return JSON.parse(JSON.stringify(newState));
@@ -73,7 +80,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.text = action.text
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
 
         case constants.HEADING_SIZE_CHANGED:
@@ -83,7 +91,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.size = action.size
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
 
         case constants.NAME_CHANGED:
@@ -93,7 +102,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.name = action.name
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
         case constants.MOVE_UP:
             let index = state.widgets.indexOf(action.widget);
@@ -102,6 +112,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
             } else {
                 newState = {
                     widgets: assignWidgetOrder(exchange(index, index-1, state.widgets)),
+                    preview: state.preview
                 };
                 return JSON.parse(JSON.stringify(newState));
             }
@@ -115,6 +126,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
             } else {
                 newState = {
                     widgets: assignWidgetOrder(exchange(index, index+1, state.widgets)),
+                    preview: state.preview
                 };
                 return JSON.parse(JSON.stringify(newState));
             }
@@ -126,7 +138,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.src = action.src
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
         case constants.HREF_CHANGED:
             return {
@@ -135,7 +148,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.href = action.href
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
 
         case constants.LIST_TYPE_CHANGED:
@@ -146,7 +160,8 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         widget.listType = action.listType
                     }
                     return Object.assign({}, widget)
-                })
+                }),
+                preview: state.preview
             }
 
 

@@ -9,7 +9,7 @@ const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widget
 
     return (
         <div className='bg-white'>
-            <div className='row'>
+            <div className='row' hidden={preview}>
                 <input onChange={() => {
                     widgetTextChanged(widget.id, inputElem.value)
                 }}
@@ -29,9 +29,9 @@ const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widget
                        ref={node => nameElem = node}
                        placeholder={'Widget Name'}
                 />
-
+                <h3>Preview</h3>
             </div>
-            <h3>Preview</h3>
+
             <div>
                 {widget.size == 1 && <h1>{widget.text}</h1>}
                 {widget.size == 2 && <h2>{widget.text}</h2>}
@@ -42,20 +42,23 @@ const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widget
 
 }
 
-const Paragraph = ({widget, widgetTextChanged, widgetNameChanged}) => {
+const Paragraph = ({widget, widgetTextChanged, widgetNameChanged, preview}) => {
     let inputElem, nameElem;
     return (
         <div>
-        <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                  value={widget.text}
-                  ref={node => inputElem = node}
-                  placeholder={'Paragraph text'}></textarea>
-            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                   value={widget.name}
-                   ref={node => nameElem = node}
-                   placeholder={'Widget Name'}
-            />
-            <h3>Preview</h3>
+            <div hidden={preview}>
+            <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                      value={widget.text}
+                      ref={node => inputElem = node}
+                      placeholder={'Paragraph text'}></textarea>
+                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                       value={widget.name}
+                       ref={node => nameElem = node}
+                       placeholder={'Widget Name'}
+                />
+                <h3>Preview</h3>
+            </div>
+
             <div>
                 <p>{widget.text}</p>
             </div>
@@ -65,20 +68,23 @@ const Paragraph = ({widget, widgetTextChanged, widgetNameChanged}) => {
 
 }
 
-const Image = ({widget, widgetSrcChanged, widgetNameChanged}) => {
+const Image = ({widget, widgetSrcChanged, widgetNameChanged, preview}) => {
     let srcElem, nameElem;
     return (
         <div>
-            <input onChange={() => widgetSrcChanged(widget.id, srcElem.value)}
-                   value={widget.src}
-                   ref={node => srcElem = node}
-                   placeholder='Image URL'/>
-            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                   value={widget.name}
-                   ref={node => nameElem = node}
-                   placeholder={'Widget Name'}
-            />
-            <h3>Preview</h3>
+            <div hidden={preview}>
+                <input onChange={() => widgetSrcChanged(widget.id, srcElem.value)}
+                       value={widget.src}
+                       ref={node => srcElem = node}
+                       placeholder='Image URL'/>
+                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                       value={widget.name}
+                       ref={node => nameElem = node}
+                       placeholder={'Widget Name'}
+                />
+                <h3>Preview</h3>
+            </div>
+
             <div>
                 <img src={widget.src}/>
             </div>
@@ -88,29 +94,33 @@ const Image = ({widget, widgetSrcChanged, widgetNameChanged}) => {
 }
 
 
-const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged}) => {
-    let nameElem, inputElem, selectElem, key;
+const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged, preview}) => {
+    let nameElem, inputElem, selectElem, key = 0;
     return (
         <div>
+            <div hidden={preview}>
             <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                         value={widget.text}
-                         ref={node => inputElem = node}
-                         placeholder={'List text'}></textarea>
-            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                   value={widget.name}
-                   ref={node => nameElem = node}
-                   placeholder={'Widget Name'}
-            />
-            <select onChange={() => listOrderChanged(widget.id, selectElem.value)}
-                    value={widget.listType}
-                    ref={node => selectElem = node}>
-                <option value="ordered">Ordered List</option>
-                <option value="unordered">Unordered List</option>
-            </select>
-            <h3>Preview</h3>
+                      value={widget.text}
+                      ref={node => inputElem = node}
+                      placeholder={'List text'}></textarea>
+                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                       value={widget.name}
+                       ref={node => nameElem = node}
+                       placeholder={'Widget Name'}
+                />
+                <select onChange={() => listOrderChanged(widget.id, selectElem.value)}
+                        value={widget.listType}
+                        ref={node => selectElem = node}>
+                    <option value="ordered">Ordered List</option>
+                    <option value="unordered">Unordered List</option>
+                </select>
+                <h3>Preview</h3>
+            </div>
             <div>
-                {widget.listType === 'ordered' && <ol>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ol>}
-                {widget.listType === 'unordered' && <ul>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ul>}
+                {widget.listType === 'ordered' &&
+                <ol>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ol>}
+                {widget.listType === 'unordered' &&
+                <ul>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ul>}
             </div>
 
         </div>
@@ -119,23 +129,26 @@ const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged}) 
 
 }
 
-const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged}) => {
+const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged, preview}) => {
     let nameElem, inputElem, hrefElem;
     return (
         <div>
-            <input onChange={() => widgetHrefChanged(widget.id, hrefElem.value)}
-                   value={widget.href}
-                   ref={node => hrefElem = node}
-                   placeholder={'Link URL'}/>
-            <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                   value={widget.text}
-                   ref={node => inputElem = node}
-                   placeholder={'Link text'}/>
-            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                   value={widget.name}
-                   ref={node => nameElem = node}
-                   placeholder={'Widget Name'}/>
-            <h3>Preview</h3>
+            <div hidden={preview}>
+                <input onChange={() => widgetHrefChanged(widget.id, hrefElem.value)}
+                       value={widget.href}
+                       ref={node => hrefElem = node}
+                       placeholder={'Link URL'}/>
+                <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                       value={widget.text}
+                       ref={node => inputElem = node}
+                       placeholder={'Link text'}/>
+                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                       value={widget.name}
+                       ref={node => nameElem = node}
+                       placeholder={'Widget Name'}/>
+
+                <h3>Preview</h3>
+            </div>
             <div>
                 <a href={widget.href}>{widget.text}</a>
             </div>
@@ -179,11 +192,13 @@ const LinkContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMap
 const ListContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(List);
 
 
-const Widget = ({widget, dispatch, lastPosition}) => {
+const Widget = ({widget, dispatch, lastPosition, preview }) => {
     let selectElement;
+
     return (
         <ul>
-            <li className='list-group-item d-flex justify-content-between align-items-center'>
+            <div hidden={preview}>
+            <div className='list-group-item d-flex justify-content-between align-items-center'>
                 <strong><h3>{widget.widgetType}</h3></strong>
                 <span className="float-right">
                     {widget.widgetOrder !== lastPosition && <button className='btn btn-warning'
@@ -222,7 +237,8 @@ const Widget = ({widget, dispatch, lastPosition}) => {
                         <i className="fa fa-times"></i>
                     </button>
                 </span>
-            </li>
+            </div>
+            </div>
             <div>
                 {widget.widgetType === 'Heading Widget' && <HeadingContainer widget={widget}/>}
                 {widget.widgetType === 'Paragraph Widget' && <ParagraphContainer widget={widget}/>}
@@ -234,7 +250,7 @@ const Widget = ({widget, dispatch, lastPosition}) => {
     )
 }
 
-const WidgetContainer = connect()(Widget);
+const WidgetContainer = connect(widgetStateToPropsMapper)(Widget);
 
 
 export default WidgetContainer;

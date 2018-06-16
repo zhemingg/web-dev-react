@@ -67,6 +67,10 @@ export const save = (dispatch, topicId) => (
     dispatch({type: constants.SAVE, topicId: topicId})
 )
 
+export const preview = dispatch => (
+    dispatch({type: constants.PREVIEW})
+)
+
 export const findAllWidgetsForTopic = (dispatch, topicId) => {
     fetch('http://localhost:8080/api/topic/TID/widget'.replace('TID', topicId))
         .then(response => (response.json()))
