@@ -22,7 +22,7 @@ class WidgetList extends Component {
     render() {
         return (
 
-            <div>
+            <div className='col-12'>
                 <div className='row'>
                     <div className='col-12'>
                         <button className='float-right btn btn-warning'
@@ -39,16 +39,15 @@ class WidgetList extends Component {
                 <div hidden={!this.props.previewMode}>
                     <h2>Preview</h2>
                 </div>
-                <div className='row'>
-                    <div className='col-12'>
-                        {this.props.widgets
-                            .sort((a, b) => a.widgetOrder - b.widgetOrder)
-                            .map(widget => (<WidgetContainer widget={widget}
-                                                             key={widget.id}
-                                                             preview={this.props.previewMode}
-                                                             lastPosition={this.props.widgets.length - 1}/>)
-                            )}
-                    </div>
+
+                <div>
+                    {this.props.widgets
+                        .sort((a, b) => a.widgetOrder - b.widgetOrder)
+                        .map(widget => (<WidgetContainer widget={widget}
+                                                         key={widget.id}
+                                                         preview={this.props.previewMode}
+                                                         lastPosition={this.props.widgets.length - 1}/>)
+                        )}
                 </div>
 
                 <div className='row'>
@@ -56,13 +55,11 @@ class WidgetList extends Component {
                         <button className="btn btn-danger float-right"
                                 onClick={this.props.addWidget}
                                 type='button'
-                                style={{marginBottom: '10px'}}>
+                                style={{marginBottom: '10px', marginTop: '10px'}}>
                             <i className="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-
-
             </div>
         )
     }
