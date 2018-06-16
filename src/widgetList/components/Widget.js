@@ -4,18 +4,19 @@ import * as actions from '../actions/index'
 import {DELETE_WIDGET} from "../constants/index"
 
 
-const Heading = ({dispatch, widget, preview, headingTextChanged, headingSizeChanged, headingNameChanged}) => {
-    let inputElem, selectElem,nameElem;
+const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widgetNameChanged}) => {
+    let inputElem, selectElem, nameElem;
 
     return (
         <div className='bg-white'>
             <div className='row'>
                 <input onChange={() => {
-                            headingTextChanged(widget.id, inputElem.value)
-                        }}
+                    widgetTextChanged(widget.id, inputElem.value)
+                }}
                        value={widget.text}
                        ref={node => inputElem = node}
-                       className = 'list-group-item'/>
+                       placeholder={'Heading text'}
+                       className='list-group-item'/>
                 <select onChange={() => headingSizeChanged(widget.id, selectElem.value)}
                         value={widget.size}
                         ref={node => selectElem = node}>
@@ -23,14 +24,14 @@ const Heading = ({dispatch, widget, preview, headingTextChanged, headingSizeChan
                     <option value="2">Heading 2</option>
                     <option value="3">Heading 3</option>
                 </select>
-                <input onchange={() => headingNameChanged(widget.id, nameElem.value)}
+                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
                        value={widget.name}
                        ref={node => nameElem = node}
+                       placeholder={'Widget Name'}
                 />
 
             </div>
             <h3>Preview</h3>
-            {console.log(widget)}
             <div>
                 {widget.size == 1 && <h1>{widget.text}</h1>}
                 {widget.size == 2 && <h2>{widget.text}</h2>}
@@ -41,16 +42,51 @@ const Heading = ({dispatch, widget, preview, headingTextChanged, headingSizeChan
 
 }
 
-const Paragraph = () => (
-    <div>
-        <h2>Paragraph</h2>
-        <textarea></textarea>
-    </div>
-)
+const Paragraph = ({widget, widgetTextChanged, widgetNameChanged}) => {
+    let inputElem, nameElem;
+    return (
+        <div>
+        <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                  value={widget.text}
+                  ref={node => inputElem = node}
+                  placeholder={'Paragraph text'}></textarea>
+            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                   value={widget.name}
+                   ref={node => nameElem = node}
+                   placeholder={'Widget Name'}
+            />
+            <h3>Preview</h3>
+            <div>
+                <h4>{widget.text}</h4>
+            </div>
+        </div>
 
-const Image = () => (
-    <h2>Image</h2>
-)
+    )
+
+}
+
+const Image = ({widget, widgetSrcChanged, widgetNameChanged}) => {
+    let srcElem, nameElem;
+    return (
+        <div>
+            <input onChange={() => widgetSrcChanged(widget.id, srcElem.value)}
+                   value={widget.src}
+                   ref={node => srcElem = node}
+                   placeholder='Image URL'/>
+            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                   value={widget.name}
+                   ref={node => nameElem = node}
+                   placeholder={'Widget Name'}
+            />
+            <h3>Preview</h3>
+            <div>
+                <img src={widget.src}/>
+            </div>
+        </div>
+
+    )
+}
+
 
 const List = () => (
     <h2>List</h2>
@@ -68,39 +104,43 @@ const moveDown = widget => {
     }
 }
 
-const headingDispatchToPropsMapper = dispatch => ({
-    headingTextChanged: (widgetId, newText) => actions.headingTextChanged(dispatch, widgetId, newText),
+const widgetDispatchToPropsMapper = dispatch => ({
+    widgetTextChanged: (widgetId, newText) => actions.widgetTextChanged(dispatch, widgetId, newText),
     headingSizeChanged: (widgetId, newSize) => actions.headingSizeChanged(dispatch, widgetId, newSize),
-    headingNameChanged: (widgetId, newName) => actions.headingNameChanged(dispatch, widgetId, newName)
+    widgetNameChanged: (widgetId, newName) => actions.widgetNameChanged(dispatch, widgetId, newName),
+    widgetSrcChanged: (widgetId, newSrc) => actions.widgetSrcChanged(dispatch, widgetId, newSrc)
 })
-const headingStateToPropsMapper = state => ({
+const widgetStateToPropsMapper = state => ({
     preview: state.preview
 })
+const HeadingContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(Heading);
 
-const HeadingContainer = connect(headingStateToPropsMapper, headingDispatchToPropsMapper)(Heading);
+const ParagraphContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(Paragraph);
+
+const ImageContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(Image);
 
 
-const Widget = ({widget, dispatch}) => {
+const Widget = ({widget, dispatch, lastPosition}) => {
     let selectElement;
     return (
         <ul>
             <li className='list-group-item d-flex justify-content-between align-items-center'>
                 <strong><h3>{widget.widgetType}</h3></strong>
                 <span className="float-right">
-                    <button className='btn btn-warning'
+                    {widget.widgetOrder !== lastPosition && <button className='btn btn-warning'
                             onClick={() => {
                                 dispatch(moveDown(widget))
                             }}
                             style={{marginRight: '5px'}}>
                         <i className="fa fa-arrow-down"></i>
-                    </button>
-                    <button className='btn btn-warning'
+                    </button>}
+                    {widget.widgetOrder !== 0 && <button className='btn btn-warning'
                             onClick={() => {
                                 dispatch(moveUp(widget))
                             }}
                             style={{marginRight: '5px'}}>
                         <i className="fa fa-arrow-up"></i>
-                    </button>
+                    </button>}
                     <select value={widget.widgetType}
                             onChange={e =>
                                 dispatch({
@@ -125,9 +165,9 @@ const Widget = ({widget, dispatch}) => {
             </li>
             <div>
                 {widget.widgetType === 'Heading Widget' && <HeadingContainer widget={widget}/>}
-                {widget.widgetType === 'Paragraph Widget' && <Paragraph/>}
+                {widget.widgetType === 'Paragraph Widget' && <ParagraphContainer widget={widget}/>}
                 {widget.widgetType === 'List Widget' && <List/>}
-                {widget.widgetType === 'Image Widget' && <Image/>}
+                {widget.widgetType === 'Image Widget' && <ImageContainer widget={widget}/>}
             </div>
         </ul>
     )

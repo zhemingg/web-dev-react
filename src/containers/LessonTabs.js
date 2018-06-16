@@ -1,8 +1,6 @@
 import React from 'react';
 import LessonItem from '../components/LessonItem';
 import LessonServiceClient from '../services/LessonServiceClient';
-import ModuleServiceClient from "../services/ModuleServiceClient";
-import CourseServiceClient from "../services/CourseServiceClient";
 
 export default class LessonTabs
     extends React.Component {

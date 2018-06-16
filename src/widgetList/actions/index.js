@@ -12,26 +12,37 @@ export const addWidget = dispatch => (
 //             widgets: widgets }))
 // }
 
-export const headingTextChanged = (dispatch, widgetId, newText) => (
+export const widgetTextChanged = (dispatch, widgetId, newText) => (
     dispatch({
-        type: constants.HEADING_TEXT_CHANGED,
+        type: constants.TEXT_CHANGED,
         id: widgetId,
-        text: newText})
+        text: newText
+    })
 )
 
 export const headingSizeChanged = (dispatch, widgetId, newSize) => (
     dispatch({
         type: constants.HEADING_SIZE_CHANGED,
         id: widgetId,
-        size: newSize})
+        size: newSize
+    })
 )
 
-export const headingNameChanged = (dispatch, widgetId, newName) => (
+export const widgetNameChanged = (dispatch, widgetId, newName) => (
     dispatch({
-        type: constants.HEADING_NAME_CHANGED,
-        id:widgetId,
-        name:newName
+        type: constants.NAME_CHANGED,
+        id: widgetId,
+        name: newName
     })
+)
+
+export const widgetSrcChanged = (dispatch, widgetId, newSrc) => (
+    dispatch(
+        {
+            type: constants.SRC_CHANGED,
+            id: widgetId,
+            src: newSrc
+        })
 )
 
 export const save = (dispatch, topicId) => (
@@ -43,9 +54,10 @@ export const findAllWidgetsForTopic = (dispatch, topicId) => {
         .then(response => (response.json()))
         .then(
             widgets => dispatch({
-            type: constants.FIND_ALL_WIDGETS_FOR_TOPIC,
-            widgets: widgets,
-            topicId: topicId})
+                type: constants.FIND_ALL_WIDGETS_FOR_TOPIC,
+                widgets: widgets,
+                topicId: topicId
+            })
         )
 
 }

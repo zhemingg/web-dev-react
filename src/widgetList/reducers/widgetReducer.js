@@ -30,12 +30,13 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                     ...state.widgets,
                     {
                         widgetOrder: state.widgets.length,
-                        text: 'New widget',
+                        text: '',
                         widgetType: 'Heading Widget',
                         id: ++max,
                         size: '1',
-                        name: 'Widget Name',
-                        heref: '',
+                        name: '',
+                        heref: 'URL',
+                        src: 'Image URL'
 
                     }
                 ]
@@ -65,7 +66,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
             }
             return JSON.parse(JSON.stringify(newState));
 
-        case constants.HEADING_TEXT_CHANGED:
+        case constants.TEXT_CHANGED:
             return {
                 widgets: state.widgets.map(widget => {
                     if (widget.id === action.id) {
@@ -85,7 +86,7 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                 })
             }
 
-        case constants.HEADING_NAME_CHANGED:
+        case constants.NAME_CHANGED:
             return {
                 widgets: state.widgets.map(widget => {
                     if (widget.id === action.id) {
@@ -95,23 +96,18 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                 })
             }
         case constants.MOVE_UP:
-            console.log(state.widgets);
             let index = state.widgets.indexOf(action.widget);
-            console.log(index);
             if (index <= 0){
                 return state;
             } else {
                 newState = {
                     widgets: assignWidgetOrder(exchange(index, index-1, state.widgets)),
                 };
-
-                console.log(newState.widgets);
                 return JSON.parse(JSON.stringify(newState));
             }
 
 
         case constants.MOVE_DOWN:
-            newState = Object.assign({}, state);
             index = state.widgets.indexOf(action.widget);
 
             if (index >= state.widgets.length-1){
@@ -121,6 +117,17 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                     widgets: assignWidgetOrder(exchange(index, index+1, state.widgets)),
                 };
                 return JSON.parse(JSON.stringify(newState));
+            }
+
+        case constants.SRC_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        widget.src = action.src
+                        console.log(widget.src)
+                    }
+                    return Object.assign({}, widget)
+                })
             }
 
 
