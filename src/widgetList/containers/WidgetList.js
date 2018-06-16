@@ -34,7 +34,6 @@ class WidgetList extends Component {
 
                 <div className='row'>
                     <div className='col-12'>
-
                     {this.props.widgets
                         .sort((a,b)=> a.widgetOrder - b.widgetOrder)
                         .map(widget => (<WidgetContainer widget={widget} key={widget.id} lastPosition={this.props.widgets.length - 1}/>)

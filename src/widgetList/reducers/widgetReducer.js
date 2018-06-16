@@ -35,9 +35,9 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                         id: ++max,
                         size: '1',
                         name: '',
-                        heref: 'URL',
-                        src: 'Image URL'
-
+                        href: '',
+                        src: '',
+                        listType: 'unordered'
                     }
                 ]
             }
@@ -124,7 +124,26 @@ export const widgetReducer = (state = {widgets: [], topicId: 0}, action) => {
                 widgets: state.widgets.map(widget => {
                     if (widget.id === action.id) {
                         widget.src = action.src
-                        console.log(widget.src)
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+        case constants.HREF_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        widget.href = action.href
+                    }
+                    return Object.assign({}, widget)
+                })
+            }
+
+        case constants.LIST_TYPE_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        console.log(action.listType)
+                        widget.listType = action.listType
                     }
                     return Object.assign({}, widget)
                 })

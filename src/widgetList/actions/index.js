@@ -45,6 +45,24 @@ export const widgetSrcChanged = (dispatch, widgetId, newSrc) => (
         })
 )
 
+export const widgetHrefChanged = (dispatch, widgetId, newHref) => (
+    dispatch(
+        {
+            type: constants.HREF_CHANGED,
+            id: widgetId,
+            href: newHref
+        })
+)
+
+export const listOrderChanged = (dispatch, widgetId, newListType) => (
+    dispatch(
+        {
+            type: constants.LIST_TYPE_CHANGED,
+            id: widgetId,
+            listType: newListType
+        })
+)
+
 export const save = (dispatch, topicId) => (
     dispatch({type: constants.SAVE, topicId: topicId})
 )

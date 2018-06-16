@@ -57,7 +57,7 @@ const Paragraph = ({widget, widgetTextChanged, widgetNameChanged}) => {
             />
             <h3>Preview</h3>
             <div>
-                <h4>{widget.text}</h4>
+                <p>{widget.text}</p>
             </div>
         </div>
 
@@ -88,9 +88,62 @@ const Image = ({widget, widgetSrcChanged, widgetNameChanged}) => {
 }
 
 
-const List = () => (
-    <h2>List</h2>
-)
+const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged}) => {
+    let nameElem, inputElem, selectElem, key;
+    return (
+        <div>
+            <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                         value={widget.text}
+                         ref={node => inputElem = node}
+                         placeholder={'List text'}></textarea>
+            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                   value={widget.name}
+                   ref={node => nameElem = node}
+                   placeholder={'Widget Name'}
+            />
+            <select onChange={() => listOrderChanged(widget.id, selectElem.value)}
+                    value={widget.listType}
+                    ref={node => selectElem = node}>
+                <option value="ordered">Ordered List</option>
+                <option value="unordered">Unordered List</option>
+            </select>
+            <h3>Preview</h3>
+            <div>
+                {widget.listType === 'ordered' && <ol>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ol>}
+                {widget.listType === 'unordered' && <ul>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ul>}
+            </div>
+
+        </div>
+
+    )
+
+}
+
+const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged}) => {
+    let nameElem, inputElem, hrefElem;
+    return (
+        <div>
+            <input onChange={() => widgetHrefChanged(widget.id, hrefElem.value)}
+                   value={widget.href}
+                   ref={node => hrefElem = node}
+                   placeholder={'Link URL'}/>
+            <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                   value={widget.text}
+                   ref={node => inputElem = node}
+                   placeholder={'Link text'}/>
+            <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                   value={widget.name}
+                   ref={node => nameElem = node}
+                   placeholder={'Widget Name'}/>
+            <h3>Preview</h3>
+            <div>
+                <a href={widget.href}>{widget.text}</a>
+            </div>
+
+        </div>
+
+    )
+}
 
 const moveUp = widget => {
     return {
@@ -108,7 +161,9 @@ const widgetDispatchToPropsMapper = dispatch => ({
     widgetTextChanged: (widgetId, newText) => actions.widgetTextChanged(dispatch, widgetId, newText),
     headingSizeChanged: (widgetId, newSize) => actions.headingSizeChanged(dispatch, widgetId, newSize),
     widgetNameChanged: (widgetId, newName) => actions.widgetNameChanged(dispatch, widgetId, newName),
-    widgetSrcChanged: (widgetId, newSrc) => actions.widgetSrcChanged(dispatch, widgetId, newSrc)
+    widgetSrcChanged: (widgetId, newSrc) => actions.widgetSrcChanged(dispatch, widgetId, newSrc),
+    widgetHrefChanged: (widgetId, newHref) => actions.widgetHrefChanged(dispatch, widgetId, newHref),
+    listOrderChanged: (widgetId, newListType) => actions.listOrderChanged(dispatch, widgetId, newListType)
 })
 const widgetStateToPropsMapper = state => ({
     preview: state.preview
@@ -119,6 +174,10 @@ const ParagraphContainer = connect(widgetStateToPropsMapper, widgetDispatchToPro
 
 const ImageContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(Image);
 
+const LinkContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(Link);
+
+const ListContainer = connect(widgetStateToPropsMapper, widgetDispatchToPropsMapper)(List);
+
 
 const Widget = ({widget, dispatch, lastPosition}) => {
     let selectElement;
@@ -128,17 +187,17 @@ const Widget = ({widget, dispatch, lastPosition}) => {
                 <strong><h3>{widget.widgetType}</h3></strong>
                 <span className="float-right">
                     {widget.widgetOrder !== lastPosition && <button className='btn btn-warning'
-                            onClick={() => {
-                                dispatch(moveDown(widget))
-                            }}
-                            style={{marginRight: '5px'}}>
+                                                                    onClick={() => {
+                                                                        dispatch(moveDown(widget))
+                                                                    }}
+                                                                    style={{marginRight: '5px'}}>
                         <i className="fa fa-arrow-down"></i>
                     </button>}
                     {widget.widgetOrder !== 0 && <button className='btn btn-warning'
-                            onClick={() => {
-                                dispatch(moveUp(widget))
-                            }}
-                            style={{marginRight: '5px'}}>
+                                                         onClick={() => {
+                                                             dispatch(moveUp(widget))
+                                                         }}
+                                                         style={{marginRight: '5px'}}>
                         <i className="fa fa-arrow-up"></i>
                     </button>}
                     <select value={widget.widgetType}
@@ -154,6 +213,7 @@ const Widget = ({widget, dispatch, lastPosition}) => {
                         <option>Paragraph Widget</option>
                         <option>List Widget</option>
                         <option>Image Widget</option>
+                        <option>Link Widget</option>
                     </select>
                     <button className="btn btn-danger"
                             onClick={
@@ -166,8 +226,9 @@ const Widget = ({widget, dispatch, lastPosition}) => {
             <div>
                 {widget.widgetType === 'Heading Widget' && <HeadingContainer widget={widget}/>}
                 {widget.widgetType === 'Paragraph Widget' && <ParagraphContainer widget={widget}/>}
-                {widget.widgetType === 'List Widget' && <List/>}
+                {widget.widgetType === 'List Widget' && <ListContainer widget={widget}/>}
                 {widget.widgetType === 'Image Widget' && <ImageContainer widget={widget}/>}
+                {widget.widgetType === 'Link Widget' && <LinkContainer widget={widget}/>}
             </div>
         </ul>
     )
