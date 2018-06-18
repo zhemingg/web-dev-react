@@ -20,7 +20,10 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
     switch (action.type) {
         case constants.PREVIEW:
             return {
-                widgets: state.widgets,
+                widgets: state.widgets.map(widget => {
+                    widget.edit = false;
+                    return Object.assign({}, widget)
+                }),
                 preview: !state.preview
             }
 
@@ -42,7 +45,8 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                         name: '',
                         href: '',
                         src: '',
-                        listType: 'unordered'
+                        listType: 'unordered',
+                        edit: false
                     }
                 ],
                 preview: state.preview
@@ -156,7 +160,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
             return {
                 widgets: state.widgets.map(widget => {
                     if (widget.id === action.id) {
-                        console.log(action.listType)
+                        //console.log(action.listType)
                         widget.listType = action.listType
                     }
                     return Object.assign({}, widget)
@@ -166,6 +170,17 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
 
 
         case constants.SAVE:
+            for(var i = 0; i < state.widgets.length; i++){
+                for (var j = 0; j < state.widgets.length; j++){
+                    if (i === j){
+                        continue;
+                    }
+                    if (state.widgets[i].name !== '' && state.widgets[i].name === state.widgets[j].name){
+                        alert('The name of widget should be unique');
+                        return state;
+                    }
+                }
+            }
             fetch('http://localhost:8080/api/course/CID/module/MID/lesson/LID/topic/TID/widget'.replace('TID', action.topicId), {
                 method: 'post',
                 body: JSON.stringify(state.widgets),
@@ -173,7 +188,21 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                     'content-type': 'application/json'
                 }
             })
+            alert('Saved Successfully');
             return state;
+
+        case constants.EDIT:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        widget.edit = !widget.edit
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            }
+
+
         default:
             return state;
     }

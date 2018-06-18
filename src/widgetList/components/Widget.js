@@ -1,16 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import * as actions from '../actions/index'
-import {DELETE_WIDGET} from "../constants/index"
+import {DELETE_WIDGET, EDIT} from "../constants/index"
+
+function isHidden(preview, edit){
+   if (preview === false)
+       return false;
+   else {
+       console.log(edit);
+       return !edit;
+   }
+}
+
+
 
 
 const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widgetNameChanged}) => {
     let inputElem, selectElem, nameElem;
 
+
     return (
         <div className='bg-white'
              style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
-            <div hidden={preview}>
+            <div hidden={isHidden(preview, widget.edit)}>
                 <div className='row'>
                     <label htmlFor={widget.id + 'text'} className='col-sm-2 col-form-label'>Heading Text</label>
                     <div className="col-sm-10">
@@ -348,6 +360,11 @@ const Widget = ({widget, dispatch, lastPosition, preview}) => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div hidden={!preview}>
+                <button className='btn btn-primary' style={{marginLeft:'10px', marginTop: '10px'}}
+                onClick={e => dispatch({type: EDIT, id: widget.id})}><i className='fa fa-edit'></i></button>
             </div>
 
             <div>
