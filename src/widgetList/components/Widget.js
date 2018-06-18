@@ -8,33 +8,52 @@ const Heading = ({widget, preview, widgetTextChanged, headingSizeChanged, widget
     let inputElem, selectElem, nameElem;
 
     return (
-        <div className='bg-white' style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
+        <div className='bg-white'
+             style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
             <div hidden={preview}>
-                <input onChange={() => {
-                    widgetTextChanged(widget.id, inputElem.value)
-                }}
-                       value={widget.text}
-                       ref={node => inputElem = node}
-                       placeholder={'Heading text'}
-                       className='form-control container-fluid'
-                       style={{marginTop: '5px', marginBottom: '5px'}}
-                />
-                <select onChange={() => headingSizeChanged(widget.id, selectElem.value)}
-                        value={widget.size}
-                        ref={node => selectElem = node}
-                        style={{marginTop: '5px', marginBottom: '5px'}}
-                        className='form-control container-fluid'>
-                    <option value="1">Heading Size 1</option>
-                    <option value="2">Heading Size 2</option>
-                    <option value="3">Heading Size 3</option>
-                </select>
-                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                       value={widget.name}
-                       ref={node => nameElem = node}
-                       placeholder={'Widget Name'}
-                       style={{marginTop: '5px', marginBottom: '5px'}}
-                       className='form-control container-fluid'
-                />
+                <div className='row'>
+                    <label htmlFor={widget.id + 'text'} className='col-sm-2 col-form-label'>Heading Text</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => {
+                            widgetTextChanged(widget.id, inputElem.value)
+                        }}
+                               value={widget.text}
+                               ref={node => inputElem = node}
+                               placeholder={'Heading text'}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'text'}
+                        />
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'select'} className='col-sm-2 col-form-label'>Heading Size</label>
+                    <div className="col-sm-10">
+                        <select onChange={() => headingSizeChanged(widget.id, selectElem.value)}
+                                value={widget.size}
+                                ref={node => selectElem = node}
+                                style={{marginTop: '5px', marginBottom: '5px'}}
+                                id={widget.id + 'select'}
+                                className='form-control container-fluid'>
+                            <option value="1">Heading Size 1</option>
+                            <option value="2">Heading Size 2</option>
+                            <option value="3">Heading Size 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Widget Name</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                               value={widget.name}
+                               ref={node => nameElem = node}
+                               placeholder={'Widget Name'}
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               className='form-control container-fluid'
+                               id={widget.id + 'name'}
+                        />
+                    </div>
+                </div>
                 <h3>Preview</h3>
             </div>
 
@@ -53,19 +72,31 @@ const Paragraph = ({widget, widgetTextChanged, widgetNameChanged, preview}) => {
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
             <div hidden={preview}>
-            <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                      value={widget.text}
-                      ref={node => inputElem = node}
-                      placeholder={'Paragraph text'}
-                      className='form-control container-fluid'
-                      style={{marginTop:'5px', marginBottom:'5px'}}></textarea>
-                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                       value={widget.name}
-                       ref={node => nameElem = node}
-                       placeholder={'Widget Name'}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                />
+                <div className='row'>
+                    <label htmlFor={widget.id + 'text'} className='col-sm-2 col-form-label'>Paragraph Text</label>
+                    <div className="col-sm-10">
+                    <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                              value={widget.text}
+                              ref={node => inputElem = node}
+                              placeholder={'Paragraph text'}
+                              className='form-control container-fluid'
+                              id={widget.id + 'text'}
+                              style={{marginTop: '5px', marginBottom: '5px'}}></textarea>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Paragraph Text</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                               value={widget.name}
+                               ref={node => nameElem = node}
+                               placeholder={'Widget Name'}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'name'}
+                        />
+                    </div>
+                </div>
                 <h3>Preview</h3>
             </div>
 
@@ -83,19 +114,31 @@ const Image = ({widget, widgetSrcChanged, widgetNameChanged, preview}) => {
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
             <div hidden={preview}>
-                <input onChange={() => widgetSrcChanged(widget.id, srcElem.value)}
-                       value={widget.src}
-                       ref={node => srcElem = node}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                       placeholder='Image URL'/>
-                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                       value={widget.name}
-                       ref={node => nameElem = node}
-                       placeholder={'Widget Name'}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                />
+                <div className='row'>
+                    <label htmlFor={widget.id + 'img'} className='col-sm-2 col-form-label'>Image Src</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetSrcChanged(widget.id, srcElem.value)}
+                               value={widget.src}
+                               ref={node => srcElem = node}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'img'}
+                               placeholder='Image URL'/>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Widget Name</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                               value={widget.name}
+                               ref={node => nameElem = node}
+                               placeholder={'Widget Name'}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'name'}
+                        />
+                    </div>
+                </div>
                 <h3>Preview</h3>
             </div>
 
@@ -113,27 +156,46 @@ const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged, p
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
             <div hidden={preview}>
-                <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                          value={widget.text}
-                          ref={node => inputElem = node}
-                          className='form-control container-fluid'
-                          style={{marginTop:'5px', marginBottom:'5px'}}
-                          placeholder={'List text'}></textarea>
-                <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
-                       value={widget.name}
-                       ref={node => nameElem = node}
-                       placeholder={'Widget Name'}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                />
+                <div className='row'>
+                    <label htmlFor={widget.id + 'list'} className='col-sm-2 col-form-label'>List Text</label>
+                    <div className="col-sm-10">
+                    <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                              value={widget.text}
+                              ref={node => inputElem = node}
+                              className='form-control container-fluid'
+                              id={widget.id + 'list'}
+                              style={{marginTop: '5px', marginBottom: '5px'}}
+                              placeholder={'List text'}></textarea>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Widget Name</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
+                               value={widget.name}
+                               ref={node => nameElem = node}
+                               placeholder={'Widget Name'}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'name'}
+                        />
+                    </div>
+                </div>
+
+                <div className='row'>
+                    <label htmlFor={widget.id + 'select'} className='col-sm-2 col-form-label'>Link URL</label>
+                    <div className="col-sm-10">
                 <select onChange={() => listOrderChanged(widget.id, selectElem.value)}
                         value={widget.listType}
                         className='form-control container-fluid'
-                        style={{marginTop:'5px', marginBottom:'5px'}}
+                        id={widget.id + 'select'}
+                        style={{marginTop: '5px', marginBottom: '5px'}}
                         ref={node => selectElem = node}>
                     <option value="ordered">Ordered List</option>
                     <option value="unordered">Unordered List</option>
                 </select>
+                    </div>
+                </div>
                 <h3>Preview</h3>
             </div>
             <div>
@@ -154,24 +216,41 @@ const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged, 
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
             <div hidden={preview}>
-                <input onChange={() => widgetHrefChanged(widget.id, hrefElem.value)}
-                       value={widget.href}
-                       ref={node => hrefElem = node}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                       placeholder={'Link URL'}/>
-                <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                       value={widget.text}
-                       ref={node => inputElem = node}
-                       className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
-                       placeholder={'Link text'}/>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'url'} className='col-sm-2 col-form-label'>Link URL</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetHrefChanged(widget.id, hrefElem.value)}
+                               value={widget.href}
+                               ref={node => hrefElem = node}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'url'}
+                               placeholder={'Link URL'}/>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'url'} className='col-sm-2 col-form-label'>Link Text</label>
+                    <div className="col-sm-10">
+                        <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
+                               value={widget.text}
+                               ref={node => inputElem = node}
+                               className='form-control container-fluid'
+                               style={{marginTop: '5px', marginBottom: '5px'}}
+                               placeholder={'Link text'}/>
+                    </div>
+                </div>
+                <div className='row'>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Link URL</label>
+                    <div className="col-sm-10">
                 <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
                        value={widget.name}
                        ref={node => nameElem = node}
                        className='form-control container-fluid'
-                       style={{marginTop:'5px', marginBottom:'5px'}}
+                       id={widget.id+'name'}
+                       style={{marginTop: '5px', marginBottom: '5px'}}
                        placeholder={'Widget Name'}/>
+                    </div>
+                </div>
 
                 <h3>Preview</h3>
             </div>
