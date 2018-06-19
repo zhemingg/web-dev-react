@@ -241,13 +241,14 @@ const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged, 
                     </div>
                 </div>
                 <div className='row'>
-                    <label htmlFor={widget.id + 'url'} className='col-sm-2 col-form-label'>Link Text</label>
+                    <label htmlFor={widget.id + 'text'} className='col-sm-2 col-form-label'>Link Text</label>
                     <div className="col-sm-10">
                         <input onChange={() => widgetTextChanged(widget.id, inputElem.value)}
                                value={widget.text}
                                ref={node => inputElem = node}
                                className='form-control container-fluid'
                                style={{marginTop: '5px', marginBottom: '5px'}}
+                               id={widget.id + 'text'}
                                placeholder={'Link text'}/>
                     </div>
                 </div>
