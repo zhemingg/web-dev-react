@@ -46,6 +46,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                         href: '',
                         src: '',
                         listType: 'unordered',
+                        listItems: '',
                         edit: false
                     }
                 ],
@@ -168,6 +169,18 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                 preview: state.preview
             }
 
+        case constants.LIST_ITEMS_CHANGED:
+            return {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.id) {
+                        //console.log(action.listType)
+                        widget.listItems = action.listItems;
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            }
+
 
         case constants.SAVE:
             for(var i = 0; i < state.widgets.length; i++){
@@ -181,7 +194,7 @@ export const widgetReducer = (state = {widgets: [], preview: false}, action) => 
                     }
                 }
             }
-            fetch('http://localhost:8080/api/course/CID/module/MID/lesson/LID/topic/TID/widget'.replace('TID', action.topicId), {
+            fetch('https://zhemingg-assignment.herokuapp.com/api/topic/TID/widget'.replace('TID', action.topicId), {
                 method: 'post',
                 body: JSON.stringify(state.widgets),
                 headers: {

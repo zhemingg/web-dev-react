@@ -72,7 +72,7 @@ export const preview = dispatch => (
 )
 
 export const findAllWidgetsForTopic = (dispatch, topicId) => {
-    fetch('http://localhost:8080/api/topic/TID/widget'.replace('TID', topicId))
+    fetch('https://zhemingg-assignment.herokuapp.com/api/topic/TID/widget'.replace('TID', topicId))
         .then(response => (response.json()))
         .then(
             widgets => dispatch({
@@ -82,6 +82,15 @@ export const findAllWidgetsForTopic = (dispatch, topicId) => {
             })
         )
 
+}
+
+export const widgetListItemsChanged = (dispatch, widgetId, newListItems) => {
+    dispatch(
+        {
+            type: constants.LIST_ITEMS_CHANGED,
+            id: widgetId,
+            listItems: newListItems
+        })
 }
 
 // export const deleteWidget = (dispatch, selectedId) => (

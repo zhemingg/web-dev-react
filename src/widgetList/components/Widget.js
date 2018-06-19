@@ -83,7 +83,7 @@ const Paragraph = ({widget, widgetTextChanged, widgetNameChanged, preview}) => {
     let inputElem, nameElem;
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
-            <div hidden={preview}>
+            <div hidden={isHidden(preview, widget.edit)}>
                 <div className='row'>
                     <label htmlFor={widget.id + 'text'} className='col-sm-2 col-form-label'>Paragraph Text</label>
                     <div className="col-sm-10">
@@ -125,7 +125,7 @@ const Image = ({widget, widgetSrcChanged, widgetNameChanged, preview}) => {
     let srcElem, nameElem;
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
-            <div hidden={preview}>
+            <div hidden={isHidden(preview, widget.edit)}>
                 <div className='row'>
                     <label htmlFor={widget.id + 'img'} className='col-sm-2 col-form-label'>Image Src</label>
                     <div className="col-sm-10">
@@ -163,16 +163,16 @@ const Image = ({widget, widgetSrcChanged, widgetNameChanged, preview}) => {
 }
 
 
-const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged, preview}) => {
+const List = ({widget, widgetNameChanged, widgetListItemsChanged, listOrderChanged, preview}) => {
     let nameElem, inputElem, selectElem, key = 0;
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
-            <div hidden={preview}>
+            <div hidden={isHidden(preview, widget.edit)}>
                 <div className='row'>
                     <label htmlFor={widget.id + 'list'} className='col-sm-2 col-form-label'>List Text</label>
                     <div className="col-sm-10">
-                    <textarea onChange={() => widgetTextChanged(widget.id, inputElem.value)}
-                              value={widget.text}
+                    <textarea onChange={() => widgetListItemsChanged(widget.id, inputElem.value)}
+                              value={widget.listItems}
                               ref={node => inputElem = node}
                               className='form-control container-fluid'
                               id={widget.id + 'list'}
@@ -211,10 +211,10 @@ const List = ({widget, widgetNameChanged, widgetTextChanged, listOrderChanged, p
                 <h3>Preview</h3>
             </div>
             <div>
-                {widget.listType === 'ordered' && widget.text !== '' &&
-                <ol>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ol>}
-                {widget.listType === 'unordered' && widget.text !== '' &&
-                <ul>{widget.text.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ul>}
+                {widget.listType === 'ordered' && widget.listItems !== '' &&
+                <ol>{widget.listItems.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ol>}
+                {widget.listType === 'unordered' && widget.listItems !== '' &&
+                <ul>{widget.listItems.split('\n').map((line) => (<li key={key++}>{line}</li>))}</ul>}
             </div>
 
         </div>
@@ -227,7 +227,7 @@ const Link = ({widget, widgetNameChanged, widgetTextChanged, widgetHrefChanged, 
     let nameElem, inputElem, hrefElem;
     return (
         <div style={{marginLeft: '10px', marginRight: '10px', paddingBottom: '10px', marginBottom: '1px'}}>
-            <div hidden={preview}>
+            <div hidden={isHidden(preview, widget.edit)}>
                 <div className='row'>
                     <label htmlFor={widget.id + 'url'} className='col-sm-2 col-form-label'>Link URL</label>
                     <div className="col-sm-10">
@@ -293,7 +293,8 @@ const widgetDispatchToPropsMapper = dispatch => ({
     widgetNameChanged: (widgetId, newName) => actions.widgetNameChanged(dispatch, widgetId, newName),
     widgetSrcChanged: (widgetId, newSrc) => actions.widgetSrcChanged(dispatch, widgetId, newSrc),
     widgetHrefChanged: (widgetId, newHref) => actions.widgetHrefChanged(dispatch, widgetId, newHref),
-    listOrderChanged: (widgetId, newListType) => actions.listOrderChanged(dispatch, widgetId, newListType)
+    listOrderChanged: (widgetId, newListType) => actions.listOrderChanged(dispatch, widgetId, newListType),
+    widgetListItemsChanged : (widgetId, newListItems) => actions.widgetListItemsChanged(dispatch, widgetId, newListItems),
 })
 const widgetStateToPropsMapper = state => ({
     preview: state.preview
