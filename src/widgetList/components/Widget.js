@@ -97,7 +97,7 @@ const Paragraph = ({widget, widgetTextChanged, widgetNameChanged, preview}) => {
                     </div>
                 </div>
                 <div className='row'>
-                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Paragraph Text</label>
+                    <label htmlFor={widget.id + 'name'} className='col-sm-2 col-form-label'>Widget Name</label>
                     <div className="col-sm-10">
                         <input onChange={() => widgetNameChanged(widget.id, nameElem.value)}
                                value={widget.name}

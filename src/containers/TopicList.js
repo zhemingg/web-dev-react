@@ -11,7 +11,9 @@ export default class TopicList extends React.Component {
             topic: {title: 'New Topic'},
             courseId: '',
             moduleId: '',
-            lessonId: ''
+            lessonId: '',
+            selectedTopic:''
+
         };
         this.TopicService = TopicServiceClient.instance;
         this.setCourseId = this.setCourseId.bind(this);
@@ -22,6 +24,7 @@ export default class TopicList extends React.Component {
         this.titleChanged = this.titleChanged.bind(this);
         this.createTopic = this.createTopic.bind(this);
         this.deleteTopic = this.deleteTopic.bind(this);
+        this.setSelectedTopic = this.setSelectedTopic.bind(this);
 
     }
 
@@ -53,6 +56,12 @@ export default class TopicList extends React.Component {
             .then(() => {
                 this.findAllTopicsForLesson(this.state.lessonId);
             });
+    }
+
+    setSelectedTopic(topicId){
+        this.setState({selectedTopic:topicId}, () => {
+            //console.log(this.state.selectedTopic)
+        });
     }
 
     setCourseId(courseId) {
@@ -93,7 +102,9 @@ export default class TopicList extends React.Component {
                 return (<TopicItem key={topic.id} topic={topic}
                                    moduleId={this.state.moduleId} delete={this.deleteTopic}
                                    lessonId={this.state.lessonId} courseId={this.state.courseId}
-                                   topicId = {topic.id} />)
+                                   topicId = {topic.id}
+                                   setSelectedTopic = {this.setSelectedTopic}
+                                   selectedTopicId={this.state.selectedTopic}/>)
             }
         );
         return topics;
